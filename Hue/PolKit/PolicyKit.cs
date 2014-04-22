@@ -1,29 +1,26 @@
-﻿using System;
+﻿using HueSaturation.API.Hue;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using System.Net.Http;
-using System.Diagnostics;
-using HueSaturation.API.UPNP;
+using Windows.Storage;
 
-namespace HueSaturation.API.Hue
+namespace Hue.PolKit
 {
-    public class BridgeManager
+    public class PolicyKit
     {
-        public Bridge CurrentBridge { get; set; }
-        public List<Bridge> DiscoveredBridges { get; set; }
+        public static string POLICY_CURRENT_BRIDGE = "policy.currentBridge";
 
-        private static volatile BridgeManager instance;
+        private static volatile PolicyKit instance;
         private static object syncRoot = new Object();
 
-        private BridgeManager() { }
+        private PolicyKit() { }
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public static BridgeManager Instance
+        public static PolicyKit Instance
         {
             get
             {
@@ -32,7 +29,7 @@ namespace HueSaturation.API.Hue
                     lock (syncRoot)
                     {
                         if (instance == null)
-                            instance = new BridgeManager();
+                            instance = new PolicyKit();
                     }
                 }
 
@@ -40,6 +37,8 @@ namespace HueSaturation.API.Hue
             }
         }
 
-        
+        public void LoadFromSettings()
+        {
+        }
     }
 }

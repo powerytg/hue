@@ -1,0 +1,45 @@
+﻿<UserControl
+    x:Class="Hue.UI.ThemePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Hue.UI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:renderers="using:Hue.UI.Renderers"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <TextBlock Grid.Row="0" Margin="0, 0, 0, 15"
+                   Foreground="#9c9c9c" TextWrapping="Wrap"
+                   Text="A themes is able to apply pre-defined sets of colors to all your connected lights. You can also create your own themes."
+                   FontSize="16"/>
+        
+        <ListView x:Name="ThemeListView" Grid.Row="1">
+            <ListView.ItemTemplateSelector>
+                <local:ThemeListTemplateSelector>
+                    <!--Hue theme-->
+                    <local:ThemeListTemplateSelector.ThemeTemplate>
+                        <DataTemplate>
+                            <renderers:ThemeRenderer Theme="{Binding}"/>
+                        </DataTemplate>
+                    </local:ThemeListTemplateSelector.ThemeTemplate>
+
+                    <!--Create new theme-->
+                    <local:ThemeListTemplateSelector.NewThemeTemplate>
+                        <DataTemplate>
+                            <renderers:CreateThemeRenderer/>
+                        </DataTemplate>
+                    </local:ThemeListTemplateSelector.NewThemeTemplate>
+
+                </local:ThemeListTemplateSelector>
+            </ListView.ItemTemplateSelector>
+        </ListView>
+    </Grid>
+</UserControl>

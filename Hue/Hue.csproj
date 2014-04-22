@@ -79,20 +79,46 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="API\Hue\Bridge.cs" />
     <Compile Include="API\Hue\BridgeFinder.cs" />
     <Compile Include="API\Hue\BridgeManager.cs" />
+    <Compile Include="API\Hue\HueAPI.cs" />
+    <Compile Include="API\Hue\Themes\HueTheme.cs" />
+    <Compile Include="API\Hue\Themes\IHueTheme.cs" />
+    <Compile Include="API\Hue\Themes\ThemeManager.cs" />
     <Compile Include="API\UPNP\DeviceFinder.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\NavigationHelper.cs" />
+    <Compile Include="Common\ObservableDictionary.cs" />
+    <Compile Include="Common\RelayCommand.cs" />
+    <Compile Include="Common\SuspensionManager.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PolKit\PolicyKit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\BridgeChooserPage.xaml.cs">
+      <DependentUpon>BridgeChooserPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\BridgeConnectPage.xaml.cs">
+      <DependentUpon>BridgeConnectPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\BridgePage.xaml.cs">
+      <DependentUpon>BridgePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Renderers\CreateThemeRenderer.xaml.cs">
+      <DependentUpon>CreateThemeRenderer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Renderers\ThemeRenderer.xaml.cs">
+      <DependentUpon>ThemeRenderer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SupportClasses\NewThemeModel.cs" />
+    <Compile Include="UI\ThemeListTemplateSelector.cs" />
+    <Compile Include="UI\ThemePage.xaml.cs">
+      <DependentUpon>ThemePage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -100,12 +126,22 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\BridgeBase.png" />
+    <Content Include="Assets\BridgeCenter.png" />
     <Content Include="Assets\Logo.scale-240.png" />
     <Content Include="Assets\SmallLogo.scale-240.png" />
     <Content Include="Assets\SplashScreen.scale-240.png" />
     <Content Include="Assets\Square71x71Logo.scale-240.png" />
     <Content Include="Assets\StoreLogo.scale-240.png" />
+    <Content Include="Assets\Themes\Blue.png" />
+    <Content Include="Assets\Themes\CreateTheme.png" />
+    <Content Include="Assets\Themes\Dream.png" />
+    <Content Include="Assets\Themes\Enchanted.png" />
+    <Content Include="Assets\Themes\Pure.png" />
+    <Content Include="Assets\Themes\Serenity.png" />
+    <Content Include="Assets\Themes\Starry.png" />
     <Content Include="Assets\WideLogo.scale-240.png" />
+    <Content Include="Common\ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -116,6 +152,43 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Styles\MainHubStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="UI\BridgeChooserPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\BridgeConnectPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\BridgePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Renderers\CreateThemeRenderer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Renderers\ThemeRenderer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\ThemePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.2\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>

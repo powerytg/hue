@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -45,7 +46,7 @@ namespace Hue
             // If you are using the NavigationHelper provided by some templates,
             // this event is handled for you.
 
-            new BridgeFinder().SearchBridgesAsync();
         }
+
     }
 }

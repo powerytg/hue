@@ -1,0 +1,69 @@
+﻿<Page
+    x:Class="Hue.UI.BridgeConnectPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Hue.UI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="#1c2127">
+
+    <Page.Transitions>
+        <TransitionCollection>
+            <NavigationThemeTransition>
+                <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                    <SlideNavigationTransitionInfo/>
+                </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+            </NavigationThemeTransition>
+        </TransitionCollection>
+    </Page.Transitions>
+        
+    <Page.Resources>
+        <Storyboard x:Name="BridgeAnimation">
+            <DoubleAnimation
+              Storyboard.TargetName="BridgeCenterImage"
+              Storyboard.TargetProperty="Opacity"
+              From="1.0" To="0.3" Duration="0:0:5" AutoReverse="True" RepeatBehavior="Forever"/>
+
+            <DoubleAnimation
+              Storyboard.TargetName="BridgeCenterRotation"
+              Storyboard.TargetProperty="Angle"
+              From="0" To="360" Duration="0:0:10" RepeatBehavior="Forever"/>
+
+        </Storyboard>
+    </Page.Resources>
+    
+    <Grid>
+        <StackPanel Orientation="Vertical"
+                    VerticalAlignment="Center">
+            <TextBlock Text="Connect To Bridge"
+                   Foreground="White" FontSize="24"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Margin="0, 0, 0, 25"/>
+
+            <TextBlock Text="Please tap on the center of your bridge to continue. You need to do so within 30 seconds"
+                   Foreground="#9c9c9c" TextWrapping="Wrap"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Margin="25, 0, 25, 30"/>
+            
+            <ProgressBar x:Name="TimeView" Minimum="0" Maximum="30" Foreground="#448ccb" Value="30"
+                         Margin="25, 0, 25, 50"/>
+
+            <Grid>
+                <Image Source="/Assets/BridgeBase.png"
+                        Width="300"
+                        HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+                <Image x:Name="BridgeCenterImage" Source="/Assets/BridgeCenter.png"
+                        Width="150"
+                        HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Image.RenderTransform>
+                        <RotateTransform x:Name="BridgeCenterRotation" CenterX="75" CenterY="75"/>
+                    </Image.RenderTransform>
+                </Image>
+
+            </Grid>
+
+        </StackPanel>
+    </Grid>
+</Page>

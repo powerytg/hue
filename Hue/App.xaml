@@ -4,4 +4,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Hue">
 
+    <Application.Resources>
+        <ResourceDictionary>
+            <!--other resources can be here-->
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/MainHubStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+
 </Application>
