@@ -21,11 +21,11 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Hue.UI
 {
-    public sealed partial class ThemePage : UserControl
+    public sealed partial class ThemeHubSection : UserControl
     {
         private ObservableCollection<IHueTheme> themeCollection = new ObservableCollection<IHueTheme>();
 
-        public ThemePage()
+        public ThemeHubSection()
         {
             this.InitializeComponent();
 

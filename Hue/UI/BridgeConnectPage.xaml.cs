@@ -102,6 +102,14 @@ namespace Hue.UI
                     timer.Stop();
                     timer = null;
                 }
+
+                // Go to the main page
+                this.Frame.Navigate(typeof(MainPage));
+                if (this.Frame.CanGoBack)
+                {
+                    this.Frame.BackStack.RemoveAt(0);
+                }
+
             }
         }
 

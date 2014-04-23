@@ -79,10 +79,17 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="API\Media\HSBColor.cs" />
     <Compile Include="API\Hue\Bridge.cs" />
     <Compile Include="API\Hue\BridgeFinder.cs" />
     <Compile Include="API\Hue\BridgeManager.cs" />
+    <Compile Include="API\Hue\Factories\BridgeFactory.cs" />
+    <Compile Include="API\Hue\Factories\LightFactory.cs" />
     <Compile Include="API\Hue\HueAPI.cs" />
+    <Compile Include="API\Hue\HueAPIBridgeExtension.cs" />
+    <Compile Include="API\Hue\HueAPIEventsExtension.cs" />
+    <Compile Include="API\Hue\HueAPILightsExtension.cs" />
+    <Compile Include="API\Hue\Light.cs" />
     <Compile Include="API\Hue\Themes\HueTheme.cs" />
     <Compile Include="API\Hue\Themes\IHueTheme.cs" />
     <Compile Include="API\Hue\Themes\ThemeManager.cs" />
@@ -108,16 +115,22 @@
     <Compile Include="UI\BridgePage.xaml.cs">
       <DependentUpon>BridgePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\LightsHubSection.xaml.cs">
+      <DependentUpon>LightsHubSection.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Renderers\CreateThemeRenderer.xaml.cs">
       <DependentUpon>CreateThemeRenderer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Renderers\LightOverviewRenderer.xaml.cs">
+      <DependentUpon>LightOverviewRenderer.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Renderers\ThemeRenderer.xaml.cs">
       <DependentUpon>ThemeRenderer.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\SupportClasses\NewThemeModel.cs" />
     <Compile Include="UI\ThemeListTemplateSelector.cs" />
-    <Compile Include="UI\ThemePage.xaml.cs">
-      <DependentUpon>ThemePage.xaml</DependentUpon>
+    <Compile Include="UI\ThemeHubSection.xaml.cs">
+      <DependentUpon>ThemeHubSection.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -169,7 +182,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UI\LightsHubSection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\Renderers\CreateThemeRenderer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Renderers\LightOverviewRenderer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -177,7 +198,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\ThemePage.xaml">
+    <Page Include="UI\ThemeHubSection.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -189,6 +210,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="API\Utils\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>

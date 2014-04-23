@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Hue.API.Hue
 {
-    public class HueAPI
+    public partial class HueAPI
     {
         public string DeviceType { get; set; }
         public string AppKey { get; set; }

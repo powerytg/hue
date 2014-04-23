@@ -27,11 +27,14 @@
 
             <HubSection Header="Themes" Style="{StaticResource MainHubSectionStyle}">
                 <DataTemplate>
-                    <ui:ThemePage/>
+                    <ui:ThemeHubSection/>
                 </DataTemplate>                
             </HubSection>
 
             <HubSection Header="Lights" Style="{StaticResource MainHubSectionStyle}">
+                <DataTemplate>
+                    <ui:LightsHubSection/>
+                </DataTemplate>
             </HubSection>
         </Hub>
     </Grid>

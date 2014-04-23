@@ -1,4 +1,5 @@
-﻿using HueSaturation.API.Hue;
+﻿using Hue.API.Hue;
+using HueSaturation.API.Hue;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,6 +8,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Popups;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -46,6 +48,32 @@ namespace Hue
             // If you are using the NavigationHelper provided by some templates,
             // this event is handled for you.
 
+            // Events
+            HueAPI.Instance.GetBridgeConfigurationsComplete += OnBridgeUpdated;
+            HueAPI.Instance.GetBridgeConfigurationsFailed += OnBridgeUpdateFailed;
+
+            // Refresh configurations
+            RefreshConfigurationsAsync();
+        }
+
+        private async void OnBridgeUpdated(object sender, EventArgs e)
+        {
+            StatusBar statusBar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView();
+            await statusBar.ProgressIndicator.HideAsync();
+        }
+
+        private async void OnBridgeUpdateFailed(object sender, EventArgs e)
+        {
+            StatusBar statusBar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView();
+            await statusBar.ProgressIndicator.HideAsync();
+        }
+
+        private async void RefreshConfigurationsAsync()
+        {
+            StatusBar statusBar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView();
+            await statusBar.ProgressIndicator.ShowAsync();
+
+            HueAPI.Instance.GetAllConfigurationsAsync();
         }
 
     }
