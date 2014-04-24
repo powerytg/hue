@@ -8,6 +8,7 @@ namespace Hue.API.Hue
 {
     public class Light
     {
+        public string LightId { get; set; }
         public string Name { get; set; }
 
         public bool IsReachable { get; set; }

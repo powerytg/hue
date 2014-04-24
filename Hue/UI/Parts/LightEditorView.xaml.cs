@@ -7,7 +7,6 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
-using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -18,15 +17,15 @@ using Windows.UI.Xaml.Navigation;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace Hue.UI.Renderers
+namespace Hue.UI.Parts
 {
-    public sealed partial class LightOverviewRenderer : UserControl
+    public sealed partial class LightEditorView : UserControl
     {
         public static readonly DependencyProperty LightSourceProperty = DependencyProperty.Register(
-        "LightSource",
-        typeof(Light),
-        typeof(LightOverviewRenderer),
-        new PropertyMetadata(null, OnLightSourcePropertyChanged));
+       "LightSource",
+       typeof(Light),
+       typeof(LightEditorView),
+       new PropertyMetadata(null, OnLightSourcePropertyChanged));
 
         public Light LightSource
         {
@@ -36,31 +35,24 @@ namespace Hue.UI.Renderers
 
         private static void OnLightSourcePropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            var target = (LightOverviewRenderer)sender;
+            var target = (LightEditorView)sender;
             target.OnLightSourceChanged();
         }
 
         private void OnLightSourceChanged()
         {
-            NameLabel.Text = LightSource.Name;
+            NameInput.Text = LightSource.Name;
 
-            // Create color fill
-            Color rgbColor = HSBColor.FromHSB(LightSource.Hue, LightSource.Saturation, LightSource.Brightness);
-            ColorIndicator.Fill = new SolidColorBrush(rgbColor);
+            ColorEditor.LightSource = LightSource;
+            ColorEditor.HSBColorSource = new HSBColor(LightSource.Hue, LightSource.Saturation, LightSource.Brightness);
         }
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public LightOverviewRenderer()
+        public LightEditorView()
         {
             this.InitializeComponent();
-        }
-
-        private void NameLabel_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
-            LightEditor.LightSource = LightSource;
         }
     }
 }

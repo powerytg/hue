@@ -12,45 +12,27 @@ namespace Hue.API.Media
     /// </summary>
     /// 
     /// <remarks> 
-    /// I didn't write this. Great thanks to the original authors and their knowledge to color spaces!
+    /// I didn't much write this. Great thanks to the original authors and their knowledge to color spaces!
+    /// 
+    /// I did made some changes to the HSB color converter, knowing that the Philips Hue uses Hue value from 
+    /// 0 - 65535 where as the usual color model uses 0 - 360. 
     /// 
     /// Source: 
     /// http://www.codeproject.com/Articles/11340/Use-both-RGB-and-HSB-color-schemas-in-your-NET-app 
     /// https://github.com/qJake/SharpHue/blob/master/SharpHue/HSBColor.cs
     /// </remarks>
-    public struct HSBColor
+    public class HSBColor
     {
-        float h;
-        float s;
-        float b;
-        int a;
+        private float h;
+        private float s;
+        private float b;
 
         public HSBColor(float h, float s, float b)
         {
-            this.a = 0xff;
-            this.h = Math.Min(Math.Max(h, 0), 255);
+            this.h = Math.Min(Math.Max(h, 0), 65535);
             this.s = Math.Min(Math.Max(s, 0), 255);
             this.b = Math.Min(Math.Max(b, 0), 255);
         }
-
-        public HSBColor(int a, float h, float s, float b)
-        {
-            this.a = a;
-            this.h = Math.Min(Math.Max(h, 0), 255);
-            this.s = Math.Min(Math.Max(s, 0), 255);
-            this.b = Math.Min(Math.Max(b, 0), 255);
-        }
-
-        public HSBColor(Color color)
-        {
-            HSBColor temp = FromColor(color);
-            this.a = temp.a;
-            this.h = temp.h;
-            this.s = temp.s;
-            this.b = temp.b;
-        }
-
-        public HSBColor(int ColorTemperature) : this(FromColorTemperature(ColorTemperature)) { }
 
         public float H
         {
@@ -69,46 +51,7 @@ namespace Hue.API.Media
             get { return b; }
             set { value = b; }
         }
-
-        public int A
-        {
-            get { return a; }
-            set { value = a; }
-        }
-
-        public Color Color
-        {
-            get
-            {
-                return FromHSB(this);
-            }
-        }
-
-        public static Color ShiftHue(Color c, float hueDelta)
-        {
-            HSBColor hsb = HSBColor.FromColor(c);
-            hsb.h += hueDelta;
-            hsb.h = Math.Min(Math.Max(hsb.h, 0), 255);
-            return FromHSB(hsb);
-        }
-
-        public static Color ShiftSaturation(Color c, float saturationDelta)
-        {
-            HSBColor hsb = HSBColor.FromColor(c);
-            hsb.s += saturationDelta;
-            hsb.s = Math.Min(Math.Max(hsb.s, 0), 255);
-            return FromHSB(hsb);
-        }
-
-
-        public static Color ShiftBrighness(Color c, float brightnessDelta)
-        {
-            HSBColor hsb = HSBColor.FromColor(c);
-            hsb.b += brightnessDelta;
-            hsb.b = Math.Min(Math.Max(hsb.b, 0), 255);
-            return FromHSB(hsb);
-        }
-
+        
         public static Color FromHSB(int h, int s, int b)
         {
             return FromHSB(new HSBColor(h, s, b));
@@ -125,7 +68,7 @@ namespace Hue.API.Media
                 float dif = hsbColor.b * hsbColor.s / 255f;
                 float min = hsbColor.b - dif;
 
-                float h = hsbColor.h * 360f / 255f;
+                float h = hsbColor.h * 360f / 65535f;
 
                 if (h < 60f)
                 {
@@ -173,7 +116,7 @@ namespace Hue.API.Media
 
             return Color.FromArgb
                 (
-                    (byte)hsbColor.a,
+                    (byte)0xff,
                     (byte)Math.Round(Math.Min(Math.Max(r, 0), 255)),
                     (byte)Math.Round(Math.Min(Math.Max(g, 0), 255)),
                     (byte)Math.Round(Math.Min(Math.Max(b, 0), 255))
@@ -183,7 +126,6 @@ namespace Hue.API.Media
         public static HSBColor FromColor(Color color)
         {
             HSBColor ret = new HSBColor(0f, 0f, 0f);
-            ret.a = color.A;
 
             float r = color.R;
             float g = color.G;
@@ -227,75 +169,12 @@ namespace Hue.API.Media
                 ret.h = 0;
             }
 
-            ret.h *= 255f / 360f;
+            ret.h *= 65535f / 360f;
             ret.s = (dif / max) * 255f;
             ret.b = max;
 
             return ret;
         }
-
-        public static Color FromColorTemperature(int temp)
-        {
-            var t = temp / 100;
-
-            double red, green, blue;
-
-            // Red:
-
-            if (t <= 66)
-            {
-                red = 255;
-            }
-            else
-            {
-                red = t - 60;
-                red = 329.698727446 * Math.Pow(red, -0.1332047592);
-                if (red < 0) { red = 0; }
-                if (red > 255) { red = 255; }
-            }
-
-            // Green:
-
-            if (t <= 66)
-            {
-                green = t;
-                green = 99.4708025861 * Math.Log(green) - 161.1195681661;
-                if (green < 0) { green = 0; }
-                if (green > 255) { green = 255; }
-            }
-            else
-            {
-                green = t - 60;
-                green = 288.1221695283 * Math.Pow(green, -0.0755148492);
-                if (green < 0) { green = 0; }
-                if (green > 255) { green = 255; }
-            }
-
-            // Blue:
-
-            if (t >= 66)
-            {
-                blue = 255;
-            }
-            else
-            {
-                if (t <= 19)
-                {
-                    blue = 0;
-                }
-                else
-                {
-                    blue = t - 10;
-                    blue = 138.5177312231 * Math.Log(blue) - 305.0447927307;
-                    if (blue < 0) { blue = 0; }
-                    if (blue > 255) { blue = 255; }
-                }
-            }
-
-            byte r = (byte)Math.Round(Math.Min(Math.Max(red, 0), 255));
-            byte g = (byte)Math.Round(Math.Min(Math.Max(green, 0), 255));
-            byte b = (byte)Math.Round(Math.Min(Math.Max(blue, 0), 255));
-            return Color.FromArgb(255, r, g, b);
-        }
+        
     }
 }

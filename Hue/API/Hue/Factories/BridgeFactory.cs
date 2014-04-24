@@ -83,6 +83,7 @@ namespace Hue.API.Hue.Factories
                 foreach(var lightId in lightKeys)
                 {
                     Light light = new Light();
+                    light.LightId = lightId;
                     bridge.LightList.Add(light);
                     bridge.LightCache[lightId] = light;
 

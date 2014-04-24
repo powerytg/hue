@@ -21,8 +21,8 @@
                    Text="A themes is able to apply pre-defined sets of colors to all your connected lights. You can also create your own themes."
                    FontSize="16"/>
         
-        <ListView x:Name="ThemeListView" Grid.Row="1">
-            <ListView.ItemTemplateSelector>
+        <GridView x:Name="ThemeListView" Grid.Row="1">
+            <GridView.ItemTemplateSelector>
                 <local:ThemeListTemplateSelector>
                     <!--Hue theme-->
                     <local:ThemeListTemplateSelector.ThemeTemplate>
@@ -39,7 +39,7 @@
                     </local:ThemeListTemplateSelector.NewThemeTemplate>
 
                 </local:ThemeListTemplateSelector>
-            </ListView.ItemTemplateSelector>
-        </ListView>
+            </GridView.ItemTemplateSelector>
+        </GridView>
     </Grid>
 </UserControl>

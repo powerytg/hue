@@ -115,6 +115,20 @@
     <Compile Include="UI\BridgePage.xaml.cs">
       <DependentUpon>BridgePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\Parts\HSBLinearEditor.xaml.cs">
+      <DependentUpon>HSBLinearEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Parts\HSBColorEditorBase.cs" />
+    <Compile Include="UI\Parts\HSBWheelEditor.xaml.cs">
+      <DependentUpon>HSBWheelEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Parts\DialerControlBase.xaml.cs">
+      <DependentUpon>DialerControlBase.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Parts\HueDialerControl.cs" />
+    <Compile Include="UI\Parts\LightEditorView.xaml.cs">
+      <DependentUpon>LightEditorView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\LightsHubSection.xaml.cs">
       <DependentUpon>LightsHubSection.xaml</DependentUpon>
     </Compile>
@@ -141,6 +155,7 @@
   <ItemGroup>
     <Content Include="Assets\BridgeBase.png" />
     <Content Include="Assets\BridgeCenter.png" />
+    <Content Include="Assets\HSBRing.png" />
     <Content Include="Assets\Logo.scale-240.png" />
     <Content Include="Assets\SmallLogo.scale-240.png" />
     <Content Include="Assets\SplashScreen.scale-240.png" />
@@ -179,6 +194,22 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\BridgePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Parts\HSBLinearEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Parts\HSBWheelEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Parts\DialerControlBase.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Parts\LightEditorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
