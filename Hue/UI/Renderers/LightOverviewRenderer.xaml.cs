@@ -21,7 +21,15 @@ using Windows.UI.Xaml.Navigation;
 namespace Hue.UI.Renderers
 {
     public sealed partial class LightOverviewRenderer : UserControl
-    {
+    {        
+        private static SolidColorBrush onStroke = new SolidColorBrush(Color.FromArgb(0x00, 0x66, 0x66, 0x66));
+        private static SolidColorBrush offStroke = new SolidColorBrush(Color.FromArgb(0xff, 0x33, 0x33, 0x33));
+        private static SolidColorBrush offFill = new SolidColorBrush(Color.FromArgb(0x00, 0x66, 0x66, 0x66));
+
+        private static SolidColorBrush onLabelBrush = new SolidColorBrush(Color.FromArgb(0xff, 0xff, 0xff, 0xff));
+        private static SolidColorBrush offLabelBrush = new SolidColorBrush(Color.FromArgb(0xff, 0x96, 0x96, 0x96));
+
+
         public static readonly DependencyProperty LightSourceProperty = DependencyProperty.Register(
         "LightSource",
         typeof(Light),
@@ -42,11 +50,7 @@ namespace Hue.UI.Renderers
 
         private void OnLightSourceChanged()
         {
-            NameLabel.Text = LightSource.Name;
-
-            // Create color fill
-            Color rgbColor = HSBColor.FromHSB(LightSource.Hue, LightSource.Saturation, LightSource.Brightness);
-            ColorIndicator.Fill = new SolidColorBrush(rgbColor);
+            UpdateDisplayList();
 
             // Events
             LightSource.LightPropertyChanged += OnLightPropertyChanged;
@@ -62,16 +66,50 @@ namespace Hue.UI.Renderers
 
         private void NameLabel_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
+            // Force refresh
+            LightEditor.LightSource = null;
             LightEditor.LightSource = LightSource;
+            FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
         }
 
         private void OnLightPropertyChanged(object sender, EventArgs e)
         {
-            Color rgbColor = HSBColor.FromHSB(LightSource.Hue, LightSource.Saturation, LightSource.Brightness);
-            ColorIndicator.Fill = new SolidColorBrush(rgbColor);
+            UpdateDisplayList();
+        }
+
+        private void UpdateDisplayList()
+        {
+            if (LightSource.IsOn)
+            {
+                NameLabel.Foreground = onLabelBrush;
+
+                Color rgbColor = HSBColor.FromHSB(LightSource.Hue, LightSource.Saturation, LightSource.Brightness);
+                ColorIndicator.Fill = new SolidColorBrush(rgbColor);
+                ColorIndicator.Stroke = onStroke;
+            }
+            else
+            {
+                NameLabel.Foreground = offLabelBrush;
+
+                ColorIndicator.Fill = offFill;
+                ColorIndicator.Stroke = offStroke;
+            }
+
             NameLabel.Text = LightSource.Name;
         }
 
+        private void ColorIndicator_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            ToggleLightAsync();
+        }
+
+        private async void ToggleLightAsync()
+        {
+            LightSource.IsOn = !LightSource.IsOn;
+            LightSource.InvalidateLightProperties();
+
+            var attrs = new { on = LightSource.IsOn };
+            await HueAPI.Instance.SetLightStateAsync(LightSource.LightId, attrs);            
+        }
     }
 }

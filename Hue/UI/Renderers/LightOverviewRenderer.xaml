@@ -25,7 +25,9 @@
     
     <StackPanel Orientation="Horizontal">
         <Ellipse x:Name="ColorIndicator" Width="20" Height="20"
-                 Margin="15" VerticalAlignment="Center" />
+                 Margin="15" VerticalAlignment="Center"
+                 Stroke="#00666666"
+                 Tapped="ColorIndicator_Tapped"/>
         
         <TextBlock x:Name="NameLabel" Foreground="White"
                    FontSize="24" FontWeight="Thin" VerticalAlignment="Center"

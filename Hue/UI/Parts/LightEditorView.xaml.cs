@@ -41,11 +41,25 @@ namespace Hue.UI.Parts
 
         private void OnLightSourceChanged()
         {
+            if(LightSource == null)
+            {
+                return;
+            }
+
             NameInput.Text = LightSource.Name;
             LightToggle.IsOn = LightSource.IsOn;
 
             ColorEditor.LightSource = LightSource;
             ColorEditor.HSBColorSource = new HSBColor(LightSource.Hue, LightSource.Saturation, LightSource.Brightness);
+
+            if (LightSource.IsOn)
+            {
+                EnableAllEditorViews();
+            }
+            else
+            {
+                DisableAllEditorViews();
+            }
         }
 
         /// <summary>
@@ -59,14 +73,39 @@ namespace Hue.UI.Parts
         }
 
         private void OnLightToggleValueChanged(object sender, EventArgs e)
-        {            
-            ToggleLightAsync(LightToggle.IsOn);
+        {
+            if (LightToggle.IsOn)
+            {
+                EnableAllEditorViews();
+            }
+            else
+            {
+                DisableAllEditorViews();
+            }
+
+            LightSource.IsOn = LightToggle.IsOn;
+            LightSource.InvalidateLightProperties();
+            ToggleLightAsync();
         }
 
-        private async void ToggleLightAsync(bool isOn)
+        private async void ToggleLightAsync()
         {
-            var attrs = new { on = isOn };
+            var attrs = new { on = LightSource.IsOn };
             await HueAPI.Instance.SetLightStateAsync(LightSource.LightId, attrs);
+        }
+
+        private void DisableAllEditorViews()
+        {
+            NameInput.IsEnabled = false;
+            ColorEditor.IsEnabled = false;
+            ColorEditor.Opacity = 0.5;
+        }
+
+        private void EnableAllEditorViews()
+        {
+            NameInput.IsEnabled = true;
+            ColorEditor.IsEnabled = true;
+            ColorEditor.Opacity = 1;
         }
 
         private async void UpdateLightName(string newName)
