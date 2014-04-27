@@ -47,6 +47,9 @@ namespace Hue.UI.Renderers
             // Create color fill
             Color rgbColor = HSBColor.FromHSB(LightSource.Hue, LightSource.Saturation, LightSource.Brightness);
             ColorIndicator.Fill = new SolidColorBrush(rgbColor);
+
+            // Events
+            LightSource.LightPropertyChanged += OnLightPropertyChanged;
         }
 
         /// <summary>
@@ -62,5 +65,13 @@ namespace Hue.UI.Renderers
             FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
             LightEditor.LightSource = LightSource;
         }
+
+        private void OnLightPropertyChanged(object sender, EventArgs e)
+        {
+            Color rgbColor = HSBColor.FromHSB(LightSource.Hue, LightSource.Saturation, LightSource.Brightness);
+            ColorIndicator.Fill = new SolidColorBrush(rgbColor);
+            NameLabel.Text = LightSource.Name;
+        }
+
     }
 }

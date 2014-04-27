@@ -6,21 +6,34 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="300"
+    d:DesignHeight="400"
     d:DesignWidth="400" IsTabStop="True">
     
     <StackPanel>
-        <TextBlock Foreground="#9c9c9c" Text="Light Name" Margin="15"
-                   FontSize="18"/>
-        <TextBox x:Name="NameInput" Margin="15, 0, 15, 15"/>
+        <Grid Margin="15">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock Foreground="#9c9c9c" Text="Light Name"
+                       FontSize="18"
+                       Grid.Column="0" VerticalAlignment="Center"/>
+            
+            <local:ToggleControl x:Name="LightToggle"
+                                 Grid.Column="1" VerticalAlignment="Center"/>
+        </Grid>
+        <TextBox x:Name="NameInput" Margin="15, 0, 15, 15"
+                 Background="#4b5762" BorderBrush="#000000"
+                 BorderThickness="1"
+                 KeyDown="NameInput_KeyDown"/>
 
         <TextBlock Foreground="#9c9c9c" Text="Light Color" Margin="15"
                    FontSize="18"/>
         
-        <!--
-        <local:HSBLinearEditor x:Name="ColorEditor" Margin="15, 0, 15, 15"/>
-        -->
         <local:HSBWheelEditor x:Name="ColorEditor" Margin="15, 0, 15, 15"/>
+        
+       
         
     </StackPanel>
 </UserControl>

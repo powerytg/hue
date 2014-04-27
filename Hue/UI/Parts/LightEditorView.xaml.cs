@@ -42,6 +42,7 @@ namespace Hue.UI.Parts
         private void OnLightSourceChanged()
         {
             NameInput.Text = LightSource.Name;
+            LightToggle.IsOn = LightSource.IsOn;
 
             ColorEditor.LightSource = LightSource;
             ColorEditor.HSBColorSource = new HSBColor(LightSource.Hue, LightSource.Saturation, LightSource.Brightness);
@@ -53,6 +54,47 @@ namespace Hue.UI.Parts
         public LightEditorView()
         {
             this.InitializeComponent();
+
+            LightToggle.ValueChanged += OnLightToggleValueChanged;
         }
+
+        private void OnLightToggleValueChanged(object sender, EventArgs e)
+        {            
+            ToggleLightAsync(LightToggle.IsOn);
+        }
+
+        private async void ToggleLightAsync(bool isOn)
+        {
+            var attrs = new { on = isOn };
+            await HueAPI.Instance.SetLightStateAsync(LightSource.LightId, attrs);
+        }
+
+        private async void UpdateLightName(string newName)
+        {
+            if (newName.Trim().Length == 0)
+            {
+                // Revert to original name
+                NameInput.Text = LightSource.Name;
+            }
+            else
+            {
+                // The API allows no longer than 32 characters for the name
+                var truncatedName = newName.Length > 32 ? newName.Substring(0, 32) : newName;
+                var attrs = new { name = truncatedName };
+                await HueAPI.Instance.SetLightAttributesAsync(LightSource.LightId, attrs);
+
+                LightSource.Name = truncatedName;
+                LightSource.InvalidateLightProperties();
+            }
+        }
+
+        private void NameInput_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter)
+            {
+                UpdateLightName(NameInput.Text);
+            }
+        }
+
     }
 }

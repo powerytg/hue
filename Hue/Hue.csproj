@@ -122,15 +122,17 @@
     <Compile Include="UI\Parts\HSBWheelEditor.xaml.cs">
       <DependentUpon>HSBWheelEditor.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Parts\DialerControlBase.xaml.cs">
-      <DependentUpon>DialerControlBase.xaml</DependentUpon>
+    <Compile Include="UI\Parts\HueDialerControl.xaml.cs">
+      <DependentUpon>HueDialerControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Parts\HueDialerControl.cs" />
     <Compile Include="UI\Parts\LightEditorView.xaml.cs">
       <DependentUpon>LightEditorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\LightsHubSection.xaml.cs">
       <DependentUpon>LightsHubSection.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Parts\ToggleControl.xaml.cs">
+      <DependentUpon>ToggleControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Renderers\CreateThemeRenderer.xaml.cs">
       <DependentUpon>CreateThemeRenderer.xaml</DependentUpon>
@@ -156,6 +158,7 @@
     <Content Include="Assets\BridgeBase.png" />
     <Content Include="Assets\BridgeCenter.png" />
     <Content Include="Assets\HSBRing.png" />
+    <Content Include="Assets\HSBThumb.png" />
     <Content Include="Assets\Logo.scale-240.png" />
     <Content Include="Assets\SmallLogo.scale-240.png" />
     <Content Include="Assets\SplashScreen.scale-240.png" />
@@ -179,6 +182,11 @@
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\HSBSliderStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="Styles\MainHubStyle.xaml">
       <SubType>Designer</SubType>
@@ -205,7 +213,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\Parts\DialerControlBase.xaml">
+    <Page Include="UI\Parts\HueDialerControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -214,6 +222,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\LightsHubSection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Parts\ToggleControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

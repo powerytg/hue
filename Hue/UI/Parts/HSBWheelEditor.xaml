@@ -8,11 +8,10 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
-    
+
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         
@@ -21,6 +20,30 @@
                                 Grid.Column="0"
                                 HorizontalAlignment="Center" VerticalAlignment="Center"
                                 Width="120" Height="120"/>
-        
+
+        <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="20">
+            <Slider x:Name="SaturationSlider" Minimum="0" Maximum="255"
+                    Header="Saturation"
+                    ValueChanged="SaturationSlider_ValueChanged" TickPlacement="Inline"
+                    Background="#444444"
+                    Style="{StaticResource HSBSliderStyle}">
+                <Slider.Foreground>
+                    <SolidColorBrush x:Name="SaturationSliderHighlightBrush"/>
+                </Slider.Foreground>
+            </Slider>
+
+            <Slider x:Name="BrightnessSlider" Minimum="0" Maximum="255"
+                BorderBrush="Transparent" BorderThickness="0"
+                    Header="Brightness" Foreground="Transparent"
+                    Style="{StaticResource HSBSliderStyle}"
+                    ValueChanged="BrightnessSlider_ValueChanged">
+                <Slider.Background>
+                    <LinearGradientBrush StartPoint="0, 0" EndPoint="1, 0">
+                        <GradientStop Color="#222222" Offset="0"/>
+                        <GradientStop Color="#aaaaaa" Offset="1"/>
+                    </LinearGradientBrush>
+                </Slider.Background>
+            </Slider>
+        </StackPanel>
     </Grid>
 </local:HSBColorEditorBase>

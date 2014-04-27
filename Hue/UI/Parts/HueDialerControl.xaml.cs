@@ -2,11 +2,13 @@
 using Hue.API.Media;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -21,12 +23,12 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Hue.UI.Parts
 {
-    public partial class DialerControlBase : UserControl
+    public partial class HueDialerControl : UserControl
     {
         public static readonly DependencyProperty HSBColorSourceProperty = DependencyProperty.Register(
        "HSBColorSource",
        typeof(HSBColor),
-       typeof(DialerControlBase),
+       typeof(HueDialerControl),
        new PropertyMetadata(null, OnHSBColorSourcePropertyChanged));
 
         public HSBColor HSBColorSource
@@ -37,73 +39,39 @@ namespace Hue.UI.Parts
 
         private static void OnHSBColorSourcePropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            var target = (DialerControlBase)sender;
+            var target = (HueDialerControl)sender;
             target.OnHSBColorSourceChanged();
         }
 
         
         protected virtual void OnHSBColorSourceChanged()
         {
-            DialerImage.Source = GetDialerImage();
-        }
-
-        protected virtual BitmapImage GetDialerImage()
-        {
-            return null;
-        }
-
-        protected virtual List<GradientStop> GetBorderGradient()
-        {
-            return new List<GradientStop>();
+            // Rotate to current value
+            CurrentValue = (int)HSBColorSource.H;
+            RotateToCurrentValue();
+            
+            Color currentColor = HSBColor.FromHSB(HSBColorSource);
+            ColorIndicatorBrush.Color = currentColor;
         }
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public DialerControlBase()
+        public HueDialerControl()
         {
             this.InitializeComponent();
             
-            // Initialize properties
-            IsInfiniteScrollingEnabled = true;
-            
+            // Events
             GestureCaptureCanvas.ManipulationStarted += OnDialerDragStart;
             GestureCaptureCanvas.ManipulationCompleted += OnDialerDragEnd;
             GestureCaptureCanvas.ManipulationDelta += OnDialerDragDelta;
         }
 
-        private double currentY;
-        private double rotationStep = 2;
-        private double anglePerStep;
-        private double previousStepY = 0;
-
-        protected int baseIndex;
-
-        public bool IsInfiniteScrollingEnabled { get; set; }
+        private double startAngle;
+        private double rotateScaleFactor = 1.0;
 
         public int CurrentValue { get; set; }
-
-        private List<int> _supportedValues;
-        public List<int> SupportedValues
-        {
-            get
-            {
-                return _supportedValues;
-            }
-            set
-            {
-                _supportedValues = value;
-                if (_supportedValues.Count > 0)
-                {
-                    anglePerStep = 360 / _supportedValues.Count;
-                    baseIndex = 0;
-                    CurrentIndex = baseIndex;
-                }
-            }
-        }
-
-        public int CurrentIndex { get; set; }
-
+       
         // Events
         public EventHandler DragBegin;
         public EventHandler DragEnd;
@@ -114,8 +82,8 @@ namespace Hue.UI.Parts
         {
             DialerTransform.CenterX = Width / 2;
             DialerTransform.CenterY = Height / 2;
-
-            previousStepY = currentY;
+            
+            startAngle = DialerTransform.Angle;
 
             if (DragBegin != null)
             {
@@ -139,60 +107,41 @@ namespace Hue.UI.Parts
 
         protected void OnDialerDragDelta(object sender, ManipulationDeltaRoutedEventArgs e)
         {
-            if (Math.Abs(e.Delta.Translation.X) > Math.Abs(e.Delta.Translation.Y))
+            double accumatedDist;
+            if (Math.Abs(e.Cumulative.Translation.X) > Math.Abs(e.Cumulative.Translation.Y))
             {
-                currentY += e.Delta.Translation.X;
+                accumatedDist = e.Cumulative.Translation.X;
             }
             else
             {
-                currentY += e.Delta.Translation.Y;
+                accumatedDist = e.Cumulative.Translation.Y;
             }
 
-            double accumatedDist = currentY - previousStepY;
+            double angle = startAngle + accumatedDist * rotateScaleFactor;
 
-            if (Math.Abs(accumatedDist) >= rotationStep)
+            DialerTransform.Angle = angle;
+            if (angle > 360)
             {
-                if (accumatedDist < 0)
-                {
-                    // Moving up
-                    CurrentIndex++;
-
-                    if (CurrentIndex >= SupportedValues.Count)
-                    {
-                        CurrentIndex = IsInfiniteScrollingEnabled ? 0 : SupportedValues.Count - 1;
-                    }
-                }
-                else
-                {
-                    // Moving down
-                    CurrentIndex--;
-
-                    if (CurrentIndex < 0)
-                    {
-                        CurrentIndex = IsInfiniteScrollingEnabled ? SupportedValues.Count - 1 : 0;
-                    }
-                }
-
-                DialerTransform.Angle = (CurrentIndex - baseIndex) * anglePerStep;
-
-                previousStepY = currentY;
-                CurrentValue = SupportedValues[CurrentIndex];
-
-                // Show ticks
-                var percent = CurrentIndex / ((float)SupportedValues.Count - 1);
-                if (ValueChanging != null)
-                {
-                    ValueChanging(this, null);
-                }
+                angle = angle % 360;
             }
+
+            CurrentValue = (int) ((angle / 360.0f) * Light.MaxHue);
+
+            Color currentColor = HSBColor.FromHSB(CurrentValue, (int)HSBColorSource.S, (int)HSBColorSource.B);
+            ColorIndicatorBrush.Color = currentColor;
+
+            if (ValueChanging != null)
+            {
+                ValueChanging(this, null);
+            }            
         }
 
         protected void RotateToCurrentValue()
         {
             DialerTransform.CenterX = Width / 2;
             DialerTransform.CenterY = Height / 2;
+            DialerTransform.Angle = ((float)CurrentValue / Light.MaxHue) * 360;
 
-            DialerTransform.Angle = (CurrentIndex - baseIndex) * anglePerStep;
         }
 
     }

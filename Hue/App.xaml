@@ -8,7 +8,8 @@
         <ResourceDictionary>
             <!--other resources can be here-->
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Styles/MainHubStyle.xaml" />
+                <ResourceDictionary Source="Styles/MainHubStyle.xaml"/>
+                <ResourceDictionary Source="Styles/HSBSliderStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -17,7 +17,7 @@
             <Flyout.FlyoutPresenterStyle>
                 <Style TargetType="FlyoutPresenter">
                     <Setter Property="ScrollViewer.ZoomMode" Value="Enabled"/>
-                    <Setter Property="Background" Value="Black"/>
+                    <Setter Property="Background" Value="#151719"/>
                 </Style>
             </Flyout.FlyoutPresenterStyle>
         </Flyout>

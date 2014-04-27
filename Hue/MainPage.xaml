@@ -10,15 +10,16 @@
     Background="#1c2127">
     
     <Grid >
-        <Hub x:Name="MainHub" Header="HUE PURE">
+        <Hub x:Name="MainHub" Header="HUE LUX">
             <Hub.HeaderTemplate>
                 <DataTemplate>
-                    <TextBlock Text="HUE SATURATION" FontWeight="ExtraLight"
-                               FontStretch="Condensed">
+                    <TextBlock Text="HUE LUMIXURY" FontWeight="ExtraLight"
+                               FontStretch="UltraCondensed">
                         <TextBlock.Foreground>
                             <LinearGradientBrush StartPoint="0, 0" EndPoint="1, 0">
                                 <GradientStop Color="#1cbbb4" Offset="0.29"/>
                                 <GradientStop Color="#4c8eb8" Offset="0.48"/>
+                                <GradientStop Color="#FF157AF3" Offset="0.8"/>
                             </LinearGradientBrush>
                         </TextBlock.Foreground>
                     </TextBlock>
