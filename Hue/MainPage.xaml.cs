@@ -26,6 +26,11 @@ namespace Hue
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        public static EventHandler RefreshBridgeRequested;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public MainPage()
         {
             this.InitializeComponent();
@@ -52,7 +57,21 @@ namespace Hue
             HueAPI.Instance.GetBridgeConfigurationsComplete += OnBridgeUpdated;
             HueAPI.Instance.GetBridgeConfigurationsFailed += OnBridgeUpdateFailed;
 
+            RefreshBridgeRequested += OnRefreshBridgeRequested;
+
             // Refresh configurations
+            RefreshConfigurationsAsync();
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            RefreshBridgeRequested -= OnRefreshBridgeRequested;
+
+            base.OnNavigatedFrom(e);
+        }
+
+        private void OnRefreshBridgeRequested(object sender, EventArgs e)
+        {
             RefreshConfigurationsAsync();
         }
 

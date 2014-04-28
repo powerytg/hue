@@ -12,11 +12,23 @@
     
     <Grid>
         <ListView x:Name="LightListView">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <renderers:LightOverviewRenderer LightSource="{Binding}"/>
-                </DataTemplate>
-            </ListView.ItemTemplate>
+            <ListView.ItemTemplateSelector>
+                <local:LightListTemplateSelector>
+                    <!--Light-->
+                    <local:LightListTemplateSelector.LightTemplate>
+                        <DataTemplate>
+                            <renderers:LightOverviewRenderer LightSource="{Binding}"/>
+                        </DataTemplate>
+                    </local:LightListTemplateSelector.LightTemplate>
+
+                    <!--Refresh-->
+                    <local:LightListTemplateSelector.RefreshLightListTemplate>
+                        <DataTemplate>
+                            <renderers:RefreshLightListRenderer/>
+                        </DataTemplate>
+                    </local:LightListTemplateSelector.RefreshLightListTemplate>
+                </local:LightListTemplateSelector>                
+            </ListView.ItemTemplateSelector>
         </ListView>
     </Grid>
 </UserControl>

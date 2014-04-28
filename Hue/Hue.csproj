@@ -152,10 +152,15 @@
     <Compile Include="UI\Renderers\LightOverviewRenderer.xaml.cs">
       <DependentUpon>LightOverviewRenderer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\Renderers\RefreshLightListRenderer.xaml.cs">
+      <DependentUpon>RefreshLightListRenderer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Renderers\ThemeRenderer.xaml.cs">
       <DependentUpon>ThemeRenderer.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\SupportClasses\NewThemeModel.cs" />
+    <Compile Include="UI\SupportClasses\RefreshLightListModel.cs" />
+    <Compile Include="UI\LightListTemplateSelector.cs" />
     <Compile Include="UI\ThemeListTemplateSelector.cs" />
     <Compile Include="UI\ThemeHubSection.xaml.cs">
       <DependentUpon>ThemeHubSection.xaml</DependentUpon>
@@ -167,12 +172,14 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\add.png" />
     <Content Include="Assets\BridgeBase.png" />
     <Content Include="Assets\BridgeCenter.png" />
     <Content Include="Assets\EditIcon.png" />
     <Content Include="Assets\HSBRing.png" />
     <Content Include="Assets\HSBThumb.png" />
     <Content Include="Assets\Logo.scale-240.png" />
+    <Content Include="Assets\refresh.png" />
     <Content Include="Assets\SmallLogo.scale-240.png" />
     <Content Include="Assets\SplashScreen.scale-240.png" />
     <Content Include="Assets\Square71x71Logo.scale-240.png" />
@@ -268,6 +275,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\Renderers\LightOverviewRenderer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Renderers\RefreshLightListRenderer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

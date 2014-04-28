@@ -1,7 +1,9 @@
 ﻿using Hue.API.Hue;
+using Hue.UI.SupportClasses;
 using HueSaturation.API.Hue;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -34,7 +36,15 @@ namespace Hue.UI
 
         private void OnLightsUpdated(object sender, EventArgs e)
         {
-            LightListView.ItemsSource = BridgeManager.Instance.CurrentBridge.LightList;
+            ObservableCollection<object> ds = new ObservableCollection<object>();
+            ds.Add(new RefreshLightListModel());
+
+            foreach (var light in BridgeManager.Instance.CurrentBridge.LightList)
+            {
+                ds.Add(light);
+            }
+
+            LightListView.ItemsSource = ds;
         }
     }
 }
