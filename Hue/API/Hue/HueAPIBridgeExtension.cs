@@ -1,5 +1,6 @@
 ﻿using Hue.API.Hue.Factories;
 using HueSaturation.API.Hue;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -53,6 +54,31 @@ namespace Hue.API.Hue
 
                 return;
             }
+        }
+
+        public async Task<bool> SetBridgeConfigurationsAsync(object attrs)
+        {
+            var url = BaseUrl + "/config";
+            var bodyJson = JsonConvert.SerializeObject(attrs);
+            Debug.WriteLine(bodyJson);
+
+            try
+            {
+                HttpClient client = new HttpClient();
+                HttpResponseMessage resp = await client.PutAsync(url, new StringContent(bodyJson));
+                resp.EnsureSuccessStatusCode();
+
+                var result = await resp.Content.ReadAsStringAsync();
+                Debug.WriteLine(result);
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                return false;
+            }
+
+            return true;
         }
     }
 }

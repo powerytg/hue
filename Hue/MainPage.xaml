@@ -37,6 +37,12 @@
                     <ui:LightsHubSection/>
                 </DataTemplate>
             </HubSection>
+
+            <HubSection Header="Bridge" Style="{StaticResource MainHubSectionStyle}">
+                <DataTemplate>
+                    <ui:BridgeHubSection/>
+                </DataTemplate>
+            </HubSection>
         </Hub>
     </Grid>
 </Page>

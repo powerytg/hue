@@ -1,0 +1,24 @@
+﻿<UserControl
+    x:Class="Hue.UI.Parts.BridgeEditorView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Hue.UI.Parts"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+    
+    <StackPanel Orientation="Vertical">
+        <TextBlock Foreground="#9c9c9c" Text="Bridge Name"
+                   FontSize="18"
+                   Grid.Column="0" VerticalAlignment="Center"
+                   Margin="15"/>
+
+        <TextBox x:Name="NameInput" Margin="15, 0, 15, 30"
+                 Background="#4b5762" BorderBrush="#000000"
+                 BorderThickness="1"
+                 KeyDown="NameInput_KeyDown"/>
+
+    </StackPanel>
+</UserControl>

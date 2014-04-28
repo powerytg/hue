@@ -112,8 +112,17 @@
     <Compile Include="UI\BridgeConnectPage.xaml.cs">
       <DependentUpon>BridgeConnectPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\BridgeHubSection.xaml.cs">
+      <DependentUpon>BridgeHubSection.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\BridgePage.xaml.cs">
       <DependentUpon>BridgePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Parts\BridgeControl.xaml.cs">
+      <DependentUpon>BridgeControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Parts\BridgeEditorView.xaml.cs">
+      <DependentUpon>BridgeEditorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Parts\HSBLinearEditor.xaml.cs">
       <DependentUpon>HSBLinearEditor.xaml</DependentUpon>
@@ -130,6 +139,9 @@
     </Compile>
     <Compile Include="UI\LightsHubSection.xaml.cs">
       <DependentUpon>LightsHubSection.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Parts\LightIndicatorControl.xaml.cs">
+      <DependentUpon>LightIndicatorControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Parts\ToggleControl.xaml.cs">
       <DependentUpon>ToggleControl.xaml</DependentUpon>
@@ -157,6 +169,7 @@
   <ItemGroup>
     <Content Include="Assets\BridgeBase.png" />
     <Content Include="Assets\BridgeCenter.png" />
+    <Content Include="Assets\EditIcon.png" />
     <Content Include="Assets\HSBRing.png" />
     <Content Include="Assets\HSBThumb.png" />
     <Content Include="Assets\Logo.scale-240.png" />
@@ -193,6 +206,11 @@
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
+    <Page Include="Styles\CircularButtonStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
     <Page Include="UI\BridgeChooserPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -201,7 +219,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UI\BridgeHubSection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\BridgePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Parts\BridgeControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Parts\BridgeEditorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -222,6 +252,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\LightsHubSection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Parts\LightIndicatorControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

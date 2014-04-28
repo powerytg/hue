@@ -32,5 +32,16 @@ namespace HueSaturation.API.Hue
             LightCache = new Dictionary<string, Light>();
             WhiteList = new List<string>();
         }
+
+        // Events
+        public EventHandler BridgePropertyChanged;
+
+        public void InvalidateBridgeProperties()
+        {
+            if (BridgePropertyChanged != null)
+            {
+                BridgePropertyChanged(this, null);
+            }
+        }
     }
 }

@@ -10,6 +10,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles/MainHubStyle.xaml"/>
                 <ResourceDictionary Source="Styles/HSBSliderStyle.xaml"/>
+                <ResourceDictionary Source="Styles/CircularButtonStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
