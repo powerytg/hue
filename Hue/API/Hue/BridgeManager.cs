@@ -60,10 +60,7 @@ namespace HueSaturation.API.Hue
                 InvalidateLightProperties(light);
             }
 
-            if (LightsOnOffStateChanged != null)
-            {
-                LightsOnOffStateChanged(CurrentBridge, null);
-            }
+            InvalidateAllLightsOnOffState();
 
             return true;
         }
@@ -79,13 +76,19 @@ namespace HueSaturation.API.Hue
                 InvalidateLightProperties(light);
             }
 
+            InvalidateAllLightsOnOffState();
+
+            return true;
+        }
+
+        public void InvalidateAllLightsOnOffState()
+        {
             if (LightsOnOffStateChanged != null)
             {
                 LightsOnOffStateChanged(CurrentBridge, null);
             }
-
-            return true;
         }
+
 
         public void InvalidateBridgeProperties()
         {

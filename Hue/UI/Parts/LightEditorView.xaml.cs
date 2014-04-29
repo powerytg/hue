@@ -93,6 +93,8 @@ namespace Hue.UI.Parts
         {
             var attrs = new { on = LightSource.IsOn };
             await HueAPI.Instance.SetLightStateAsync(LightSource.LightId, attrs);
+
+            BridgeManager.Instance.InvalidateAllLightsOnOffState();
         }
 
         private void DisableAllEditorViews()

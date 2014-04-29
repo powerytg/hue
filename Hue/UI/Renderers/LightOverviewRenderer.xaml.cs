@@ -111,11 +111,13 @@ namespace Hue.UI.Renderers
 
         private async void ToggleLightAsync()
         {
-            LightSource.IsOn = !LightSource.IsOn;
-            BridgeManager.Instance.InvalidateLightProperties(LightSource);
+            var newValue = !LightSource.IsOn;
+            var attrs = new { on = newValue };
+            await HueAPI.Instance.SetLightStateAsync(LightSource.LightId, attrs);
 
-            var attrs = new { on = LightSource.IsOn };
-            await HueAPI.Instance.SetLightStateAsync(LightSource.LightId, attrs);            
+            LightSource.IsOn = newValue;
+            BridgeManager.Instance.InvalidateLightProperties(LightSource);
+            BridgeManager.Instance.InvalidateAllLightsOnOffState();
         }
     }
 }

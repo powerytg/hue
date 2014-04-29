@@ -26,7 +26,7 @@ namespace Hue.UI.Parts
     {
         private static string LightOffText = "Lights Off";
         private static string LightOnText = "Lights On";
-        private static string LightNoneText = "No Lights";
+        //private static string LightNoneText = "No Lights";
 
         /// <summary>
         /// Constructor
