@@ -64,7 +64,7 @@ namespace Hue.UI.Parts
                 await HueAPI.Instance.SetBridgeConfigurationsAsync(attrs);
 
                 currentBridge.Name = truncatedName;
-                currentBridge.InvalidateBridgeProperties();
+                BridgeManager.Instance.InvalidateBridgeProperties();
             }
         }
 

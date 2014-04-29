@@ -92,16 +92,5 @@ namespace Hue.API.Hue
         public static string ColorModeXY = "xy";
         public static string ColorModeTemperature = "ct";
         public static string ColorModeHueSaturation = "hs";
-
-        // Events
-        public EventHandler LightPropertyChanged;
-
-        public void InvalidateLightProperties()
-        {
-            if (LightPropertyChanged != null)
-            {
-                LightPropertyChanged(this, null);
-            }
-        }
     }
 }

@@ -30,6 +30,7 @@ namespace Hue.UI
 
             // Events
             HueAPI.Instance.GetBridgeConfigurationsComplete += OnLightsUpdated;
+            BridgeManager.Instance.BridgePropertyChanged += OnBridgePropertyChanged;
         }
 
         private void OnLightsUpdated(object sender, EventArgs e)
@@ -40,9 +41,6 @@ namespace Hue.UI
             VersionLabel.Text = currentBridge.Version;
 
             BridgeWidget.UpdateLightWidgets();
-
-            // Events
-            currentBridge.BridgePropertyChanged += OnBridgePropertyChanged;
         }
 
         private void EditNameButton_Tapped(object sender, TappedRoutedEventArgs e)

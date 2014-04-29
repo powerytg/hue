@@ -30,21 +30,87 @@ namespace Hue.UI
         {
             this.InitializeComponent();
 
+            LightsToggleButton.IsEnabled = false;
+
             // Events
             HueAPI.Instance.GetBridgeConfigurationsComplete += OnLightsUpdated;
+            BridgeManager.Instance.LightsOnOffStateChanged += OnLightsOnOffChanged;
         }
 
         private void OnLightsUpdated(object sender, EventArgs e)
         {
             ObservableCollection<object> ds = new ObservableCollection<object>();
-            ds.Add(new RefreshLightListModel());
-
             foreach (var light in BridgeManager.Instance.CurrentBridge.LightList)
             {
                 ds.Add(light);
             }
 
             LightListView.ItemsSource = ds;
+            HueBar.UpdateDisplayList();
+
+            // Summary
+            LightSummaryLabel.Text = ds.Count.ToString() + " LIGHTS";
+
+            // Toggle button            
+            UpdateLightControlLabel();
         }
+
+        private void UpdateLightControlLabel()
+        {
+            var onCount = BridgeManager.Instance.GetActiveLightCount();
+            if (BridgeManager.Instance.CurrentBridge.LightList.Count == 0)
+            {
+                LightsToggleButton.IsEnabled = false;
+            }
+            else if (onCount > 0)
+            {
+                LightsToggleButton.Content = "ALL OFF";
+                LightsToggleButton.IsEnabled = true;
+            }
+            else
+            {
+                LightsToggleButton.Content = "ALL ON";
+                LightsToggleButton.IsEnabled = true;
+            }
+        }
+
+        private void RefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainPage.RefreshBridgeRequested(this, null);
+        }
+
+        private void LightsToggleButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (BridgeManager.Instance.CurrentBridge.LightList.Count == 0)
+            {
+                return;
+            }
+
+            int onCount = BridgeManager.Instance.GetActiveLightCount();
+            if (onCount > 0)
+            {
+                TurnOffAllLights();
+            }
+            else
+            {
+                TurnOnAllLights();
+            }
+        }
+
+        private async void TurnOffAllLights()
+        {
+            await BridgeManager.Instance.TurnOffAllLightsAsync();
+        }
+
+        private async void TurnOnAllLights()
+        {
+            await BridgeManager.Instance.TurnOnAllLightsAsync();
+        }
+
+        private void OnLightsOnOffChanged(object sender, EventArgs e)
+        {
+            UpdateLightControlLabel();
+        }
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Hue.API.Hue;
 using Hue.API.Media;
+using HueSaturation.API.Hue;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -47,7 +48,7 @@ namespace Hue.UI.Parts
             UpdateDisplayList();
 
             // Events
-            LightSource.LightPropertyChanged += OnLightPropertyChanged;
+            BridgeManager.Instance.LightPropertyChanged += OnLightPropertyChanged;
         }
 
         /// <summary>
@@ -60,6 +61,11 @@ namespace Hue.UI.Parts
 
         private void OnLightPropertyChanged(object sender, EventArgs e)
         {
+            if (sender != LightSource)
+            {
+                return;
+            }
+
             UpdateDisplayList();
         }
 

@@ -1,5 +1,6 @@
 ﻿using Hue.API.Hue;
 using Hue.API.Media;
+using HueSaturation.API.Hue;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -84,7 +85,7 @@ namespace Hue.UI.Parts
             }
 
             LightSource.IsOn = LightToggle.IsOn;
-            LightSource.InvalidateLightProperties();
+            BridgeManager.Instance.InvalidateLightProperties(LightSource);
             ToggleLightAsync();
         }
 
@@ -123,7 +124,7 @@ namespace Hue.UI.Parts
                 await HueAPI.Instance.SetLightAttributesAsync(LightSource.LightId, attrs);
 
                 LightSource.Name = truncatedName;
-                LightSource.InvalidateLightProperties();
+                BridgeManager.Instance.InvalidateLightProperties(LightSource);
             }
         }
 

@@ -50,6 +50,7 @@
                     <ui:BridgeHubSection/>
                 </DataTemplate>
             </HubSection>
+            
         </Hub>
     </Grid>
 </Page>

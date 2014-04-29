@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
@@ -33,6 +34,9 @@ namespace Hue.UI.Parts
         public BridgeControl()
         {
             this.InitializeComponent();
+
+            // Events
+            BridgeManager.Instance.LightsOnOffStateChanged += OnLightsOnOffChanged;
         }
 
         public void UpdateLightWidgets()
@@ -71,37 +75,16 @@ namespace Hue.UI.Parts
 
             UpdateLightControlLabel();
 
-            int onCount = GetActiveLightCount();
+            int onCount = BridgeManager.Instance.GetActiveLightCount();
             if(onCount > 0)
             {
                 BridgeAnimation.Begin();
             }
         }
 
-        private int GetActiveLightCount()
-        {
-            int lightCount = BridgeManager.Instance.CurrentBridge.LightList.Count;
-            if (lightCount == 0)
-            {
-                LightControlLabel.Text = LightNoneText;
-                return 0;
-            }
-
-            int onCount = 0;
-            foreach (var light in BridgeManager.Instance.CurrentBridge.LightList)
-            {
-                if (light.IsOn)
-                {
-                    onCount++;
-                }
-            }
-
-            return onCount;
-        }
-
         private void UpdateLightControlLabel()
         {
-            int onCount = GetActiveLightCount();
+            int onCount = BridgeManager.Instance.GetActiveLightCount();
             if (onCount > 0)
             {
                 LightControlLabel.Text = LightOffText;
@@ -120,7 +103,7 @@ namespace Hue.UI.Parts
                 return;
             }
 
-            int onCount = GetActiveLightCount();
+            int onCount = BridgeManager.Instance.GetActiveLightCount();
             if (onCount > 0)
             {
                 TurnOffAllLights();
@@ -136,20 +119,13 @@ namespace Hue.UI.Parts
             LightToggle.IsHitTestVisible = false;
             LightToggle.Opacity = 0.5;
 
-            foreach (var light in BridgeManager.Instance.CurrentBridge.LightList)
-            {
-                var attrs = new { on = false };
-                await HueAPI.Instance.SetLightStateAsync(light.LightId, attrs);
-
-                light.IsOn = false;
-                light.InvalidateLightProperties();
-            }
+            await BridgeManager.Instance.TurnOffAllLightsAsync();
 
             LightToggle.Opacity = 1;
             LightToggle.IsHitTestVisible = true;
 
             UpdateLightControlLabel();
-            BridgeAnimation.Pause();
+            BridgeAnimation.Stop();
         }
 
         private async void TurnOnAllLights()
@@ -157,22 +133,29 @@ namespace Hue.UI.Parts
             LightToggle.IsHitTestVisible = false;
             LightToggle.Opacity = 0.5;
 
-            foreach (var light in BridgeManager.Instance.CurrentBridge.LightList)
-            {
-                var attrs = new { on = true };
-                await HueAPI.Instance.SetLightStateAsync(light.LightId, attrs);
-
-                light.IsOn = true;
-                light.InvalidateLightProperties();
-            }
+            await BridgeManager.Instance.TurnOnAllLightsAsync();
 
             LightToggle.Opacity = 1;
             LightToggle.IsHitTestVisible = true;
 
             UpdateLightControlLabel();
-            BridgeAnimation.Resume();
+            BridgeAnimation.Begin();
         }
 
+        private void OnLightsOnOffChanged(object sender, EventArgs e)
+        {
+            UpdateLightControlLabel();
 
+            int onCount = BridgeManager.Instance.GetActiveLightCount();
+            if (onCount > 0)
+            {
+                BridgeAnimation.Begin();
+            }
+            else
+            {
+                BridgeAnimation.Stop();
+            }
+
+        }
     }
 }

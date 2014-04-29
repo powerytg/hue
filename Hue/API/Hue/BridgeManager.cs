@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using System.Diagnostics;
 using HueSaturation.API.UPNP;
+using Hue.API.Hue;
 
 namespace HueSaturation.API.Hue
 {
@@ -18,6 +19,14 @@ namespace HueSaturation.API.Hue
         private static volatile BridgeManager instance;
         private static object syncRoot = new Object();
 
+        // Events
+        public EventHandler LightsOnOffStateChanged;
+        public EventHandler BridgePropertyChanged;
+        public EventHandler LightPropertyChanged;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
         private BridgeManager() { }
 
         /// <summary>
@@ -40,6 +49,78 @@ namespace HueSaturation.API.Hue
             }
         }
 
-        
+        public async Task<bool> TurnOffAllLightsAsync()
+        {
+            foreach (var light in BridgeManager.Instance.CurrentBridge.LightList)
+            {
+                var attrs = new { on = false };
+                await HueAPI.Instance.SetLightStateAsync(light.LightId, attrs);
+
+                light.IsOn = false;
+                InvalidateLightProperties(light);
+            }
+
+            if (LightsOnOffStateChanged != null)
+            {
+                LightsOnOffStateChanged(CurrentBridge, null);
+            }
+
+            return true;
+        }
+
+        public async Task<bool> TurnOnAllLightsAsync()
+        {
+            foreach (var light in BridgeManager.Instance.CurrentBridge.LightList)
+            {
+                var attrs = new { on = true };
+                await HueAPI.Instance.SetLightStateAsync(light.LightId, attrs);
+
+                light.IsOn = true;
+                InvalidateLightProperties(light);
+            }
+
+            if (LightsOnOffStateChanged != null)
+            {
+                LightsOnOffStateChanged(CurrentBridge, null);
+            }
+
+            return true;
+        }
+
+        public void InvalidateBridgeProperties()
+        {
+            if (BridgePropertyChanged != null)
+            {
+                BridgePropertyChanged(CurrentBridge, null);
+            }
+        }
+
+        public void InvalidateLightProperties(Light light)
+        {
+            if (LightPropertyChanged != null)
+            {
+                LightPropertyChanged(light, null);
+            }
+        }
+
+        public int GetActiveLightCount()
+        {
+            int lightCount = CurrentBridge.LightList.Count;
+            if (lightCount == 0)
+            {
+                return 0;
+            }
+
+            int onCount = 0;
+            foreach (var light in CurrentBridge.LightList)
+            {
+                if (light.IsOn)
+                {
+                    onCount++;
+                }
+            }
+
+            return onCount;
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Hue.API.Hue;
 using Hue.API.Media;
+using HueSaturation.API.Hue;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -54,7 +55,7 @@ namespace Hue.UI.Parts
         private void OnHueValueChanged(object sender, EventArgs e)
         {
             LightSource.Hue = HueDialer.CurrentValue;
-            LightSource.InvalidateLightProperties();
+            BridgeManager.Instance.InvalidateLightProperties(LightSource);
 
             var attrs = new { hue = HueDialer.CurrentValue };
             UpdateLightStateAsync(attrs);
@@ -65,7 +66,7 @@ namespace Hue.UI.Parts
         private void SaturationSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
             LightSource.Saturation = (int)SaturationSlider.Value;
-            LightSource.InvalidateLightProperties();
+            BridgeManager.Instance.InvalidateLightProperties(LightSource);
 
             SaturationSliderHighlightBrush.Color = HSBColor.FromHSB(LightSource.Hue, LightSource.Saturation, LightSource.Brightness);
 
@@ -76,7 +77,7 @@ namespace Hue.UI.Parts
         private void BrightnessSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
             LightSource.Brightness = (int)BrightnessSlider.Value;
-            LightSource.InvalidateLightProperties();
+            BridgeManager.Instance.InvalidateLightProperties(LightSource);
 
             SaturationSliderHighlightBrush.Color = HSBColor.FromHSB(LightSource.Hue, LightSource.Saturation, LightSource.Brightness);
 
