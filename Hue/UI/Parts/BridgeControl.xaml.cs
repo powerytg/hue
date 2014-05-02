@@ -1,6 +1,5 @@
 ﻿using Hue.API.Hue;
 using Hue.API.Media;
-using HueSaturation.API.Hue;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,7 +25,7 @@ namespace Hue.UI.Parts
     {
         private static string LightOffText = "Lights Off";
         private static string LightOnText = "Lights On";
-        //private static string LightNoneText = "No Lights";
+        private static string LightNoneText = "No Lights";
 
         /// <summary>
         /// Constructor
@@ -45,7 +44,7 @@ namespace Hue.UI.Parts
 
             if (BridgeManager.Instance.CurrentBridge.LightList.Count == 0)
             {
-                LightControlLabel.Text = "No Light";
+                LightControlLabel.Text = LightNoneText;
                 return;
             }
 

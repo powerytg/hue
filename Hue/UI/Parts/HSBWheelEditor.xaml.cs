@@ -1,6 +1,5 @@
 ﻿using Hue.API.Hue;
 using Hue.API.Media;
-using HueSaturation.API.Hue;
 using System;
 using System.Collections.Generic;
 using System.IO;

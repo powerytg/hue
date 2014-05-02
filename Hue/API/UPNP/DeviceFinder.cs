@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Windows.Networking.Sockets;
 using System.Runtime.InteropServices.WindowsRuntime;
 
-namespace HueSaturation.API.UPNP
+namespace Hue.API.UPNP
 {
     /// <summary>
     /// 

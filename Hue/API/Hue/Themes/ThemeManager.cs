@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hue.API.Hue.Themes.SystemThemes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,7 +34,7 @@ namespace Hue.API.Hue.Themes
         private ThemeManager()
         {
             Themes = new List<HueTheme>();
-            Themes.Add(new HueTheme { Name = "Deep Blue", IsSystemTheme = true, BannerImage = "/Assets/Themes/Blue.png" });
+            Themes.Add(new DeepBlueTheme());
             Themes.Add(new HueTheme { Name = "Dreaming", IsSystemTheme = true, BannerImage = "/Assets/Themes/Dream.png" });
             Themes.Add(new HueTheme { Name = "Enchanted", IsSystemTheme = true, BannerImage = "/Assets/Themes/Enchanted.png" });
             Themes.Add(new HueTheme { Name = "Pure Essense", IsSystemTheme = true, BannerImage = "/Assets/Themes/Pure.png" });

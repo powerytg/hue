@@ -1,6 +1,5 @@
 ﻿using Hue.API.Hue;
 using Hue.UI.SupportClasses;
-using HueSaturation.API.Hue;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -32,12 +31,19 @@ namespace Hue.UI
 
             LightsToggleButton.IsEnabled = false;
 
+            UpdateDisplayList();
+
             // Events
             HueAPI.Instance.GetBridgeConfigurationsComplete += OnLightsUpdated;
             BridgeManager.Instance.LightsOnOffStateChanged += OnLightsOnOffChanged;
         }
 
         private void OnLightsUpdated(object sender, EventArgs e)
+        {
+            UpdateDisplayList();
+        }
+
+        private void UpdateDisplayList()
         {
             ObservableCollection<object> ds = new ObservableCollection<object>();
             foreach (var light in BridgeManager.Instance.CurrentBridge.LightList)

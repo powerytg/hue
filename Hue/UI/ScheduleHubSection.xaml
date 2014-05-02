@@ -1,0 +1,64 @@
+﻿<UserControl
+    x:Class="Hue.UI.ScheduleHubSection"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Hue.UI"
+    xmlns:renderers="using:Hue.UI.Renderers"
+    xmlns:parts="using:Hue.UI.Parts"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <!--On Off-->
+        <Grid Grid.Row="0" Margin="0, 0, 0, 15">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock Text="Use Schedules" FontSize="18"
+                       Grid.Column="0" VerticalAlignment="Center"/>
+            <parts:ToggleControl x:Name="ScheduleToggle" 
+                                 Grid.Column="1" VerticalAlignment="Center"/>
+        </Grid>
+
+        <!--Schedule list-->
+        <ListView x:Name="ScheduleListView" Grid.Row="1">
+            <ListView.RenderTransform>
+                <TranslateTransform x:Name="ScheduleListViewTranslate"/>
+            </ListView.RenderTransform>
+            
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
+            
+            <ListView.ItemTemplateSelector>
+                <local:ScheduleListTemplateSelector>
+                    <local:ScheduleListTemplateSelector.UnsupportedScheduleTemplate>
+                        <DataTemplate>
+                            <renderers:UnsupportedScheduleRenderer ScheduleSource="{Binding}"/>
+                        </DataTemplate>
+                    </local:ScheduleListTemplateSelector.UnsupportedScheduleTemplate>
+
+                    <local:ScheduleListTemplateSelector.ScheduleTemplate>
+                        <DataTemplate>
+                            <renderers:OnOffScheduleRenderer ScheduleSource="{Binding}"/>
+                        </DataTemplate>
+                    </local:ScheduleListTemplateSelector.ScheduleTemplate>
+                    
+                </local:ScheduleListTemplateSelector>
+            </ListView.ItemTemplateSelector>
+        </ListView>
+
+    </Grid>
+</UserControl>

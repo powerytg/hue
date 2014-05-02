@@ -1,4 +1,4 @@
-﻿using HueSaturation.API.Hue;
+﻿using Hue.API.Hue;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;

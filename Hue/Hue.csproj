@@ -79,6 +79,11 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="API\Hue\BridgeManagerSchedulerExtension.cs" />
+    <Compile Include="API\Hue\Factories\ScheduleFactory.cs" />
+    <Compile Include="API\Hue\HueAPISchedulesExtension.cs" />
+    <Compile Include="API\Hue\Schedule.cs" />
+    <Compile Include="API\Hue\Themes\SystemThemes\DeepBlueTheme.cs" />
     <Compile Include="API\Media\HSBColor.cs" />
     <Compile Include="API\Hue\Bridge.cs" />
     <Compile Include="API\Hue\BridgeFinder.cs" />
@@ -155,13 +160,27 @@
     <Compile Include="UI\Renderers\LightOverviewRenderer.xaml.cs">
       <DependentUpon>LightOverviewRenderer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\Renderers\ScheduleRendererBase.cs" />
     <Compile Include="UI\Renderers\ThemeRenderer.xaml.cs">
       <DependentUpon>ThemeRenderer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\Renderers\OnOffScheduleRenderer.xaml.cs">
+      <DependentUpon>OnOffScheduleRenderer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Renderers\UnsupportedScheduleRenderer.xaml.cs">
+      <DependentUpon>UnsupportedScheduleRenderer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ScheduleHubSection.xaml.cs">
+      <DependentUpon>ScheduleHubSection.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\SupportClasses\NewThemeModel.cs" />
+    <Compile Include="UI\ScheduleListTemplateSelector.cs" />
     <Compile Include="UI\ThemeListTemplateSelector.cs" />
     <Compile Include="UI\ThemeHubSection.xaml.cs">
       <DependentUpon>ThemeHubSection.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ThemePage.xaml.cs">
+      <DependentUpon>ThemePage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -219,6 +238,11 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="Styles\CircularButtonStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Styles\RoundedCheckBoxStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -291,7 +315,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UI\Renderers\OnOffScheduleRenderer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Renderers\UnsupportedScheduleRenderer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\ScheduleHubSection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\ThemeHubSection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\ThemePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -306,6 +346,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="API\Utils\" />
+    <Folder Include="PolKit\Schedules\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>

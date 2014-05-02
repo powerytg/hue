@@ -6,12 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http;
 using System.Diagnostics;
-using HueSaturation.API.UPNP;
+using Hue.API.UPNP;
 using Hue.API.Hue;
 
-namespace HueSaturation.API.Hue
+namespace Hue.API.Hue
 {
-    public class BridgeManager
+    public partial class BridgeManager
     {
         public Bridge CurrentBridge { get; set; }
         public List<Bridge> DiscoveredBridges { get; set; }
@@ -23,6 +23,8 @@ namespace HueSaturation.API.Hue
         public EventHandler LightsOnOffStateChanged;
         public EventHandler BridgePropertyChanged;
         public EventHandler LightPropertyChanged;
+
+        public EventHandler UnsupportedScheduleRemoved;
 
         /// <summary>
         /// Constructor

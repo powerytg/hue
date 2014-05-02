@@ -1,0 +1,45 @@
+﻿<local:ScheduleRendererBase
+    x:Class="Hue.UI.Renderers.UnsupportedScheduleRenderer"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Hue.UI.Renderers"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+    
+    <Grid Margin="0, 0, 0, 15">
+        <Border Background="#131a23" CornerRadius="6">
+            <StackPanel Orientation="Vertical">
+                <Border Background="#f7941d" CornerRadius="6"
+                        Margin="3">
+                    <TextBlock Text="Unsupported Schedule"
+                               FontSize="14" Foreground="#212a34"
+                               Margin="10, 2, 0, 2"/>
+                </Border>
+
+                <TextBlock x:Name="NameLabel"
+                               FontSize="14" Foreground="#FFAAC6E4" FontWeight="Medium"
+                               TextWrapping="Wrap"
+                               Margin="10, 2, 10, 2"/>
+
+                <TextBlock x:Name="DescLabel"
+                               FontSize="14" Foreground="#FFAAC6E4" FontWeight="Medium"
+                               TextWrapping="Wrap"
+                               Margin="10, 2, 10, 2"/>
+
+                <TextBlock Text="This schedule was defined by other apps. It may cause conflicts."
+                               FontSize="14" Foreground="#6e7b89"
+                               TextWrapping="Wrap"
+                               Margin="10, 2, 10, 2"/>
+                
+                <Button x:Name="DeleteButton" Content="Remove This Schedule"
+                        MinHeight="26" Margin="10" Padding="4, 0, 4, 0" HorizontalAlignment="Right"
+                        Foreground="#FFDCB690" FontWeight="Medium" FontSize="14"
+                        Background="#FF533F2F" Style="{StaticResource RoundedButtonStyle}"
+                        Click="DeleteButton_Click"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</local:ScheduleRendererBase>

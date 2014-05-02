@@ -50,7 +50,13 @@
                     <ui:BridgeHubSection/>
                 </DataTemplate>
             </HubSection>
-            
+
+            <HubSection x:Name="ScheduleSection" Header="Scheduler" Style="{StaticResource MainHubSectionStyle}">
+                <DataTemplate>
+                    <ui:ScheduleHubSection/>
+                </DataTemplate>
+            </HubSection>
+
         </Hub>
     </Grid>
 </Page>

@@ -1,4 +1,4 @@
-﻿using HueSaturation.API.UPNP;
+﻿using Hue.API.UPNP;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Data.Json;
 
-namespace HueSaturation.API.Hue
+namespace Hue.API.Hue
 {
     public class BridgeFinder
     {

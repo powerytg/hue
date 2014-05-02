@@ -25,6 +25,9 @@ namespace Hue.UI
     {
         private ObservableCollection<IHueTheme> themeCollection = new ObservableCollection<IHueTheme>();
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public ThemeHubSection()
         {
             this.InitializeComponent();
@@ -39,6 +42,19 @@ namespace Hue.UI
             themeCollection.Add(new NewThemeModel());
 
             ThemeListView.ItemsSource = themeCollection;
+        }
+
+        private void ThemeListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ThemeListView.SelectedItem == null)
+            {
+                return;
+            }
+
+            IHueTheme theme = ThemeListView.SelectedItem as IHueTheme;
+            ThemeListView.SelectedItem = null;
+            var frame = Window.Current.Content as Frame;
+            frame.Navigate(typeof(ThemePage), theme);
         }
     }
 }

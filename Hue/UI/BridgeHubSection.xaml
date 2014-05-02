@@ -40,7 +40,7 @@
             
             <Button x:Name="EditNameButton"
                     Width="40" Height="40" MinWidth="40" MinHeight="40"
-                    Grid.Column="1" Background="#448ccb"
+                    Grid.Column="1" Background="#FF0A3A64"
                     Style="{StaticResource CircularButtonStyle}"
                     FlyoutBase.AttachedFlyout="{StaticResource BridgeNameFlyOut}" Tapped="EditNameButton_Tapped">
                 <Image Source="/Assets/EditIcon.png" Width="20"/>

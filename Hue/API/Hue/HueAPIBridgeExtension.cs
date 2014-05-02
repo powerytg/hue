@@ -1,5 +1,5 @@
 ﻿using Hue.API.Hue.Factories;
-using HueSaturation.API.Hue;
+using Hue.API.Hue;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

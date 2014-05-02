@@ -1,11 +1,10 @@
-﻿using Hue.API.Hue;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HueSaturation.API.Hue
+namespace Hue.API.Hue
 {
     public class Bridge
     {
@@ -23,6 +22,8 @@ namespace HueSaturation.API.Hue
         public List<Light> LightList { get; set; }
         public Dictionary<string, Light> LightCache { get; set; }
 
+        public List<Schedule> ScheduleList { get; set; }
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -31,6 +32,8 @@ namespace HueSaturation.API.Hue
             LightList = new List<Light>();
             LightCache = new Dictionary<string, Light>();
             WhiteList = new List<string>();
+
+            ScheduleList = new List<Schedule>();
         }
     }
 }

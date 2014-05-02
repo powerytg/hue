@@ -12,6 +12,7 @@
                 <ResourceDictionary Source="Styles/HSBSliderStyle.xaml"/>
                 <ResourceDictionary Source="Styles/CircularButtonStyle.xaml"/>
                 <ResourceDictionary Source="Styles/RoundedButtonStyle.xaml"/>
+                <ResourceDictionary Source="Styles/RoundedCheckBoxStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

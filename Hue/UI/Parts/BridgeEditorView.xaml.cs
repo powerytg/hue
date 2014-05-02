@@ -1,5 +1,4 @@
 ﻿using Hue.API.Hue;
-using HueSaturation.API.Hue;
 using System;
 using System.Collections.Generic;
 using System.IO;

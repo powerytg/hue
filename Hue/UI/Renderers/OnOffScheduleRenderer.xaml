@@ -1,0 +1,47 @@
+﻿<local:ScheduleRendererBase
+    x:Class="Hue.UI.Renderers.OnOffScheduleRenderer"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Hue.UI.Renderers"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="110"
+    d:DesignWidth="400">
+
+    <Grid x:Name="LayoutRoot" Margin="0, 0, 0, 15">
+        <Border Background="#384b61" CornerRadius="6">
+            <StackPanel Orientation="Vertical">
+                <Border Background="#517fb6" CornerRadius="6"
+                        Margin="3">
+                    <TextBlock x:Name="NameLabel"
+                               FontSize="14" Foreground="#212a34"
+                               Margin="10, 2, 0, 2"/>
+                </Border>
+
+                <Grid Margin="15, 0, 15, 4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <CheckBox x:Name="EnabledCheckBox" Content="Scheduled" FontSize="18" Foreground="White"
+                              Style="{StaticResource RoundedCheckBoxStyle}"
+                              BorderBrush="#FFCFE5F7"
+                               VerticalAlignment="Center" Grid.Column="0"
+                              Checked="EnabledCheckBox_Checked" Unchecked="EnabledCheckBox_Unchecked"/>
+
+                    <TextBlock x:Name="TimeLabel" FontSize="24" Foreground="White"
+                               VerticalAlignment="Center" Grid.Column="2"
+                               Tapped="TimeLabel_Tapped">
+                        <Underline>
+                            <Run x:Name="TimeLabelContent" Text="Select Time" />
+                        </Underline>
+                    </TextBlock>
+
+                </Grid>
+            </StackPanel>
+        </Border>        
+    </Grid>
+</local:ScheduleRendererBase>

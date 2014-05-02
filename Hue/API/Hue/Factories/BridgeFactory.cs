@@ -1,4 +1,4 @@
-﻿using HueSaturation.API.Hue;
+﻿using Hue.API.Hue;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -30,6 +30,12 @@ namespace Hue.API.Hue.Factories
                     UpdateBridgeLightsWithJObject(bridge, (JObject)json["lights"]);
                 }
 
+                // Schedule section
+                JToken scheduleValue;
+                if (json.TryGetValue("schedules", out scheduleValue))
+                {
+                    UpdateBridgeSchedulesWithJObject(bridge, (JObject)json["schedules"]);
+                }
             }
             catch (Exception ex)
             {
@@ -96,5 +102,30 @@ namespace Hue.API.Hue.Factories
                 Debug.WriteLine(ex);
             }
         }
+
+        public static void UpdateBridgeSchedulesWithJObject(Bridge bridge, JObject json)
+        {
+            try
+            {
+                // Get schedule keys
+                IList<string> scheduleKeys = json.Properties().Select(p => p.Name).ToList();
+                bridge.ScheduleList.Clear();
+
+                foreach (var scheduleId in scheduleKeys)
+                {
+                    Schedule schedule = new Schedule();
+                    schedule.ScheduleId = scheduleId;
+                    bridge.ScheduleList.Add(schedule);
+
+                    JObject scheduleJson = (JObject)json[scheduleId];
+                    ScheduleFactory.UpdateScheduleWithJObject(schedule, scheduleJson);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+        }
+
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Hue.API.Hue;
-using HueSaturation.API.Hue;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -28,12 +27,14 @@ namespace Hue.UI
         {
             this.InitializeComponent();
 
+            UpdateDisplayList();
+
             // Events
-            HueAPI.Instance.GetBridgeConfigurationsComplete += OnLightsUpdated;
+            HueAPI.Instance.GetBridgeConfigurationsComplete += OnConfigUpdated;
             BridgeManager.Instance.BridgePropertyChanged += OnBridgePropertyChanged;
         }
 
-        private void OnLightsUpdated(object sender, EventArgs e)
+        private void UpdateDisplayList()
         {
             Bridge currentBridge = BridgeManager.Instance.CurrentBridge;
 
@@ -41,6 +42,11 @@ namespace Hue.UI
             VersionLabel.Text = currentBridge.Version;
 
             BridgeWidget.UpdateLightWidgets();
+        }
+
+        private void OnConfigUpdated(object sender, EventArgs e)
+        {
+            UpdateDisplayList();
         }
 
         private void EditNameButton_Tapped(object sender, TappedRoutedEventArgs e)
