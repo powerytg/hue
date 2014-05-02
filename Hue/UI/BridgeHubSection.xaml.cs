@@ -49,15 +49,15 @@ namespace Hue.UI
             UpdateDisplayList();
         }
 
-        private void EditNameButton_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            BridgeNameEditor.UpdateDisplayList();
-            FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
-        }
-
         private void OnBridgePropertyChanged(object sender, EventArgs e)
         {
             NameLabel.Text = BridgeManager.Instance.CurrentBridge.Name;
+        }
+
+        private void EditNameButton_Click(object sender, RoutedEventArgs e)
+        {
+            BridgeNameEditor.UpdateDisplayList();
+            FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
         }
 
     }

@@ -68,13 +68,18 @@ namespace Hue.UI
             }
 
             TitleLabel.Text = theme.Name;
-            
+            ColorListView.ItemsSource = theme.ColorList;
         }
 
         
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             this.navigationHelper.OnNavigatedFrom(e);
+        }
+
+        private void EditNameButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
     }

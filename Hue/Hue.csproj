@@ -157,6 +157,9 @@
     <Compile Include="UI\Renderers\CreateThemeRenderer.xaml.cs">
       <DependentUpon>CreateThemeRenderer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\Renderers\ColorRenderer.xaml.cs">
+      <DependentUpon>ColorRenderer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Renderers\LightOverviewRenderer.xaml.cs">
       <DependentUpon>LightOverviewRenderer.xaml</DependentUpon>
     </Compile>
@@ -304,6 +307,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\Renderers\CreateThemeRenderer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Renderers\ColorRenderer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
