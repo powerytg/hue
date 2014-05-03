@@ -1,8 +1,10 @@
 ﻿using Hue.API.Hue.Themes;
 using Hue.API.Media;
 using Hue.Common;
+using Hue.UI.Renderers;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -26,6 +28,8 @@ namespace Hue.UI
     {
         private NavigationHelper navigationHelper;
         private HueTheme theme;
+
+        public ObservableCollection<HSBColor> localColorList = new ObservableCollection<HSBColor>();
 
         public ThemePage()
         {
@@ -68,12 +72,24 @@ namespace Hue.UI
             }
 
             TitleLabel.Text = theme.Name;
-            ColorListView.ItemsSource = theme.ColorList;
+
+            // Make a clone of colors
+            foreach (var color in theme.ColorList)
+            {
+                localColorList.Add(color.Clone());
+            }
+
+            ColorListView.ItemsSource = localColorList;
+
+            // Events
+            ColorRenderer.ColorChanged += OnThemeColorChanged;
         }
 
         
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
+            ColorRenderer.ColorChanged -= OnThemeColorChanged;
+
             this.navigationHelper.OnNavigatedFrom(e);
         }
 
@@ -81,6 +97,81 @@ namespace Hue.UI
         {
 
         }
+
+        private void OnThemeColorChanged(object sender, EventArgs e)
+        {
+            if (NotificationView.Visibility == Visibility.Visible)
+            {
+                return;
+            }
+
+            bool isDirty = false;
+            if (localColorList.Count != theme.ColorList.Count)
+            {
+                isDirty = true;
+            }
+            else
+            {
+                for (int i = 0; i < localColorList.Count; i++)
+                {
+                    if (!localColorList[i].IsEqualToColor(theme.ColorList[i]))
+                    {
+                        isDirty = true;
+                        break;
+                    }
+                }
+            }
+
+            if (isDirty)
+            {
+                ShowNotificationView();
+            }
+            
+        }
+
+        private void ShowNotificationView() 
+        {
+            NotificationView.Visibility = Visibility.Visible;
+        }
+
+        private void hideNotificationView()
+        {
+            NotificationView.Visibility = Visibility.Collapsed;
+        }
+
+        private void applyButton_Click(object sender, RoutedEventArgs e)
+        {
+            ApplyThemeAsync();
+            hideNotificationView();
+        }
+
+        private void RevertButton_Click(object sender, RoutedEventArgs e)
+        {
+            RevertTheme();
+            hideNotificationView();
+        }
+
+        private async void ApplyThemeAsync()
+        {
+            theme.ColorList.Clear();
+            foreach (var color in localColorList)
+            {
+                theme.ColorList.Add(color.Clone());
+            }
+
+            await ThemeManager.Instance.ApplyThemeAsync(theme);
+        }
+            
+
+        private void RevertTheme()
+        {
+            localColorList.Clear();
+            foreach (var color in theme.ColorList)
+            {
+                localColorList.Add(color.Clone());
+            }
+        }
+
 
     }
 }

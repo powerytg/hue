@@ -14,7 +14,7 @@ namespace Hue.API.Media
     /// <remarks> 
     /// I didn't much write this. Great thanks to the original authors and their knowledge to color spaces!
     /// 
-    /// I did made some changes to the HSB color converter, knowing that the Philips Hue uses Hue value from 
+    /// I did fixed several bugs (like setters) and made some changes to the HSB color converter, knowing that the Philips Hue uses Hue value from 
     /// 0 - 65535 where as the usual color model uses 0 - 360. 
     /// 
     /// Source: 
@@ -37,19 +37,19 @@ namespace Hue.API.Media
         public float H
         {
             get { return h; }
-            set { value = h; }
+            set { h = value; }
         }
 
         public float S
         {
             get { return s; }
-            set { value = s; }
+            set { s = value; }
         }
 
         public float B
         {
             get { return b; }
-            set { value = b; }
+            set { b = value; }
         }
         
         public static Color FromHSB(int h, int s, int b)
@@ -175,6 +175,21 @@ namespace Hue.API.Media
 
             return ret;
         }
-        
+
+        public HSBColor Clone()
+        {
+            return new HSBColor(h, s, b);
+        }
+
+        public string ToRGBString()
+        {
+            Color color = FromHSB(this);
+            return string.Format("#{0:X2}{1:X2}{2:X2}", color.R, color.G, color.B);
+        }
+
+        public bool IsEqualToColor(HSBColor other)
+        {
+            return ((h == other.H) && (s == other.S) && (b == other.B));
+        }
     }
 }

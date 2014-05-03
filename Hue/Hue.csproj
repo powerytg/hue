@@ -151,6 +151,9 @@
     <Compile Include="UI\Parts\LightOverviewControl.xaml.cs">
       <DependentUpon>LightOverviewControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\Parts\ThemeColorEditor.xaml.cs">
+      <DependentUpon>ThemeColorEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Parts\ToggleControl.xaml.cs">
       <DependentUpon>ToggleControl.xaml</DependentUpon>
     </Compile>
@@ -299,6 +302,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\Parts\LightOverviewControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Parts\ThemeColorEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

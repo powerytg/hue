@@ -11,28 +11,30 @@
     
     <StackPanel>
         <Slider x:Name="HueSlider" Minimum="0" Maximum="65535"
-                Foreground="Transparent">
+                Foreground="Transparent"
+                Style="{StaticResource HSBSliderStyle}"
+                ValueChanged="HueSlider_ValueChanged">
             <Slider.Background>
                 <LinearGradientBrush x:Name="HueGradient" StartPoint="0, 0" EndPoint="1, 0"/>
             </Slider.Background>
         </Slider>
 
         <Slider x:Name="SaturationSlider" Minimum="0" Maximum="255"
-                Foreground="Transparent">
-            <Slider.Background>
-                <LinearGradientBrush  StartPoint="0, 0" EndPoint="1, 0">
-                    <GradientStop Color="White" Offset="0"/>
-                    <GradientStop x:Name="SaturationStop" Offset="1"/>
-                </LinearGradientBrush>
-            </Slider.Background>
+                Style="{StaticResource HSBSliderStyle}" Background="#444444"
+                ValueChanged="SaturationSlider_ValueChanged">
+            <Slider.Foreground>
+                <SolidColorBrush x:Name="SaturationSliderHighlightBrush"/>
+            </Slider.Foreground>
         </Slider>
 
         <Slider x:Name="BrightnessSlider" Minimum="0" Maximum="255"
-                Foreground="Transparent">
+                Foreground="Transparent"
+                Style="{StaticResource HSBSliderStyle}"
+                ValueChanged="BrightnessSlider_ValueChanged">
             <Slider.Background>
                 <LinearGradientBrush StartPoint="0, 0" EndPoint="1, 0">
-                    <GradientStop Color="Black" Offset="0"/>
-                    <GradientStop x:Name="BrightnessStop" Offset="1"/>
+                    <GradientStop Color="#222222" Offset="0"/>
+                    <GradientStop Color="#aaaaaa" Offset="1"/>
                 </LinearGradientBrush>
             </Slider.Background>
         </Slider>

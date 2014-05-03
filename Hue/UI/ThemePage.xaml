@@ -18,39 +18,34 @@
         </Grid.ChildrenTransitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- TitlePanel -->
-        <TextBlock Margin="24,12,0,0"
-                   Text="Theme Editor"
-                   FontWeight="ExtraLight" FontStretch="UltraCondensed"
-                   FontSize="48"/>
-
-        <Grid Grid.Row="1" x:Name="ContentRoot">
+        <Grid Grid.Row="0" x:Name="ContentRoot"
+              Margin="15, 10, 10, 10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             
-            <Grid Margin="15, 24, 10, 15" Grid.Row="0">
+            <Grid Margin="0, 0, 10, 25" Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
                 <StackPanel Orientation="Vertical" Grid.Column="0">
-                    <TextBlock x:Name="TitleLabel" Text="Theme Name"
-                               Foreground="#9c9c9c" FontSize="16"/>
 
-                    <TextBlock x:Name="NameLabel" Text="New Theme"
-                               Foreground="#36a6e6" FontSize="14"
-                               Margin="15, 10, 0, 0"/>
+                    <TextBlock x:Name="TitleLabel" Text="New Theme"
+                               FontSize="54" FontWeight="Light" Foreground="White"
+                               VerticalAlignment="Center">                        
+                    </TextBlock>
                 </StackPanel>
 
                 <Button x:Name="EditNameButton"
+                        VerticalAlignment="Center"
                     Width="40" Height="40" MinWidth="40" MinHeight="40"
                     Grid.Column="1" Background="#FF0A3A64"
                     Style="{StaticResource CircularButtonStyle}"
@@ -59,25 +54,59 @@
                 </Button>
             </Grid>
 
-            <Grid Grid.Row="1" Margin="15, 20, 0, 15">
+            <Grid Grid.Row="1" Margin="0, 0, 0, 20">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="Color Definitions"
-                       Foreground="#9c9c9c" FontSize="16"
-                           Grid.Column="0"/>
+                <Button Content="Add Color" Padding="10, 2, 10, 2"
+                        Foreground="#FFF0F0F0"
+                       Background="#FF3352E0"
+                       Style="{StaticResource RoundedButtonStyle}" MinHeight="34"
+                       Grid.Column="0" VerticalAlignment="Center"/>
 
             </Grid>
 
             <ListView x:Name="ColorListView" 
-                      Grid.Row="2" Margin="24, 10, 15, 15">
+                      Grid.Row="2">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <renderers:ColorRenderer HSBColorSource="{Binding}"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+
+            <Border x:Name="NotificationView" Background="#131a23" CornerRadius="6"
+                    Grid.Row="3" Visibility="Collapsed">
+                <StackPanel Orientation="Vertical">
+                    <Border Background="#f7941d" CornerRadius="6"
+                        Margin="3">
+                        <TextBlock Text="Theme modified"
+                               FontSize="14" Foreground="#212a34"
+                               Margin="10, 2, 0, 2"/>
+                    </Border>
+
+                    <TextBlock Text="One or more properties of the theme has been changed. Please confirm the changes or revert to original settings"
+                               FontSize="14" Foreground="#6e7b89"
+                               TextWrapping="Wrap"
+                               Margin="10, 2, 10, 2"/>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button x:Name="applyButton" Content="Apply Changes"
+                        MinHeight="26" Margin="10" Padding="4, 0, 4, 0"
+                        Foreground="#FFDCB690" FontWeight="Medium" FontSize="14"
+                        Background="#FF533F2F" Style="{StaticResource RoundedButtonStyle}"
+                                Click="applyButton_Click"/>
+
+                    <Button x:Name="RevertButton" Content="Revert"
+                        MinHeight="26" Margin="10" Padding="4, 0, 4, 0"
+                        Foreground="#FFDCB690" FontWeight="Medium" FontSize="14"
+                        Background="#FF533F2F" Style="{StaticResource RoundedButtonStyle}"                            
+                        Click="RevertButton_Click"/>
+                    </StackPanel>
+                    
+                </StackPanel>
+            </Border>
         </Grid>
     </Grid>
 </Page>

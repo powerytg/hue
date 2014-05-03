@@ -14,23 +14,22 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace Hue.UI.Renderers
+namespace Hue.UI.Parts
 {
-    public sealed partial class ColorRenderer : UserControl
+    public sealed partial class ThemeColorEditor : UserControl
     {
         // Events
-        public static EventHandler ColorChanged;
+        public EventHandler ValueChanged;
 
         public static readonly DependencyProperty HSBColorSourceProperty = DependencyProperty.Register(
-        "HSBColorSource",
-        typeof(HSBColor),
-        typeof(ColorRenderer),
-        new PropertyMetadata(null, OnHSBColorSourcePropertyChanged));
+       "HSBColorSource",
+       typeof(HSBColor),
+       typeof(ThemeColorEditor),
+       new PropertyMetadata(null, OnHSBColorSourcePropertyChanged));
 
         public HSBColor HSBColorSource
         {
@@ -40,57 +39,52 @@ namespace Hue.UI.Renderers
 
         private static void OnHSBColorSourcePropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            var target = (ColorRenderer)sender;
+            var target = (ThemeColorEditor)sender;
             target.OnHSBColorSourceChanged();
         }
 
         private void OnHSBColorSourceChanged()
-        {
-            UpdateDisplayList();
-        }
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public ColorRenderer()
-        {
-            this.InitializeComponent();
-
-            // Events
-            Editor.ValueChanged += OnColorChanged;
-        }
-
-        private void OnColorChanged(object sender, EventArgs e)
         {
             if (HSBColorSource == null)
             {
                 return;
             }
 
-            UpdateDisplayList();
+            UpdateColorPreview();
+            Editor.HSBColorSource = HSBColorSource;
+        }
 
-            if (ColorChanged != null)
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public ThemeColorEditor()
+        {
+            this.InitializeComponent();
+
+            Editor.ValueChanged += OnColorChanged;
+        }
+
+        private void UpdateColorPreview()
+        {
+            Color fillColor = HSBColor.FromHSB(HSBColorSource);
+            ColorNameLabel.Text = HSBColorSource.ToRGBString();
+
+            double maxSize = PreviewBorder.Width - 15;
+            double previewSize = maxSize * (HSBColorSource.B / Light.MaxBrightness);
+            ThumbnailView.Width = previewSize;
+            ThumbnailView.Height = previewSize;
+            ThumbnailFill.Color = fillColor;
+        }
+
+        private void OnColorChanged(object sender, EventArgs e)
+        {
+            UpdateColorPreview();
+
+            if (ValueChanged != null)
             {
-                ColorChanged(this, null);
+                ValueChanged(this, null);
             }
         }
 
-
-        private void NameLabel_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            Editor.HSBColorSource = null;
-            Editor.HSBColorSource = HSBColorSource;
-            FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
-        }
-
-        private void UpdateDisplayList()
-        {
-            Color rgbColor = HSBColor.FromHSB((int)HSBColorSource.H, (int)HSBColorSource.S, (int)HSBColorSource.B);
-            ColorIndicator.Fill = new SolidColorBrush(rgbColor);
-
-            NameLabel.Text = HSBColorSource.ToRGBString();
-        }
-
-       
     }
 }

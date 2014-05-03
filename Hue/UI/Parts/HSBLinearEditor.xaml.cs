@@ -22,22 +22,29 @@ namespace Hue.UI.Parts
 {
     public sealed partial class HSBLinearEditor : HSBColorEditorBase
     {
+        // Events
+        public EventHandler ValueChanged;
+
         protected override void OnHSBColorSourceChanged()
         {
+            if (HSBColorSource == null)
+            {
+                return;
+            }
+
             int stops = 7;
             HueGradient.GradientStops.Clear();
-            for (int i = 0; i < stops; i++)
+            for (int i = 0; i <= stops; i++)
             {
                 GradientStop gs = new GradientStop();
                 gs.Offset = (float)i / stops;
 
                 int hue = (int)Math.Floor(Light.MaxHue * gs.Offset);
-                gs.Color = HSBColor.FromHSB(hue, (int)HSBColorSource.S, (int)HSBColorSource.B);
+                gs.Color = HSBColor.FromHSB(hue, (int)HSBColorSource.S / 2, (int)HSBColorSource.B);
                 HueGradient.GradientStops.Add(gs);
             }
 
-            SaturationStop.Color = HSBColor.FromHSB((int)HSBColorSource.H, 255, 255);
-            BrightnessStop.Color = HSBColor.FromHSB((int)HSBColorSource.H, 255, 255);
+            SaturationSliderHighlightBrush.Color = HSBColor.FromHSB(HSBColorSource);
 
             // Set slider thumb positions
             if (HueSlider.Value != HSBColorSource.H)
@@ -56,14 +63,45 @@ namespace Hue.UI.Parts
             }
         }
 
-        
-
         /// <summary>
         /// Constructor
         /// </summary>
         public HSBLinearEditor()
         {
             this.InitializeComponent();
+        }
+
+        private void HueSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        {
+            HSBColorSource.H = (float)HueSlider.Value;
+            SaturationSliderHighlightBrush.Color = HSBColor.FromHSB(HSBColorSource);
+
+            if (ValueChanged != null)
+            {
+                ValueChanged(this, null);
+            }
+        }
+
+        private void SaturationSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        {
+            HSBColorSource.S = (float)SaturationSlider.Value;
+            SaturationSliderHighlightBrush.Color = HSBColor.FromHSB(HSBColorSource);
+
+            if (ValueChanged != null)
+            {
+                ValueChanged(this, null);
+            }
+        }
+
+        private void BrightnessSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        {
+            HSBColorSource.B = (float)BrightnessSlider.Value;
+            SaturationSliderHighlightBrush.Color = HSBColor.FromHSB(HSBColorSource);
+
+            if (ValueChanged != null)
+            {
+                ValueChanged(this, null);
+            }
         }
     }
 }

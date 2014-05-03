@@ -11,7 +11,8 @@
     d:DesignWidth="400">
     
     <UserControl.Resources>
-        <Flyout x:Key="ColorEditorFlyOut" Placement="Right">            
+        <Flyout x:Key="EditorFlyout" Placement="Right">
+            <parts:ThemeColorEditor x:Name="Editor"/>
 
             <Flyout.FlyoutPresenterStyle>
                 <Style TargetType="FlyoutPresenter">
@@ -22,12 +23,16 @@
         </Flyout>
     </UserControl.Resources>
     
-    <StackPanel Orientation="Horizontal" Tapped="NameLabel_Tapped">
-        <Ellipse x:Name="ColorIndicator" Width="20" Height="20"
+    <Grid>       
+        <!--Title and preview-->
+        <StackPanel Orientation="Horizontal" Tapped="NameLabel_Tapped"
+                    FlyoutBase.AttachedFlyout="{StaticResource EditorFlyout}">
+            <Ellipse x:Name="ColorIndicator" Width="20" Height="20"
                  Margin="15" VerticalAlignment="Center"/>
-        
-        <TextBlock x:Name="NameLabel" Foreground="White"
-                   FontSize="24" FontWeight="Thin" VerticalAlignment="Center"
-                   FlyoutBase.AttachedFlyout="{StaticResource ColorEditorFlyOut}"/>
-    </StackPanel>
+
+            <TextBlock x:Name="NameLabel" Foreground="White"
+                   FontSize="24" FontWeight="Thin" VerticalAlignment="Center"/>
+        </StackPanel>
+    </Grid>
+
 </UserControl>

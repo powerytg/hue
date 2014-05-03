@@ -53,6 +53,10 @@ namespace Hue.UI
 
             IHueTheme theme = ThemeListView.SelectedItem as IHueTheme;
             ThemeListView.SelectedItem = null;
+
+            // Apply theme
+            ThemeManager.Instance.ApplyThemeAsync(theme as HueTheme);
+
             var frame = Window.Current.Content as Frame;
             frame.Navigate(typeof(ThemePage), theme);
         }
