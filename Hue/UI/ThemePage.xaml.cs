@@ -11,6 +11,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Graphics.Display;
+using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -74,10 +75,14 @@ namespace Hue.UI
             if (theme.IsSystemTheme)
             {
                 EditNameButton.Visibility = Visibility.Collapsed;
+                RevertSystemThemeButton.Visibility = Visibility.Visible;
+                DeleteButton.Visibility = Visibility.Collapsed;
             }
             else 
             {
                 EditNameButton.Visibility = Visibility.Visible;
+                RevertSystemThemeButton.Visibility = Visibility.Collapsed;
+                DeleteButton.Visibility = Visibility.Visible;
             }
 
             TitleLabel.Text = theme.Name;
@@ -197,6 +202,40 @@ namespace Hue.UI
             }
 
             TitleLabel.Text = theme.Name;
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            var msg = new MessageDialog("Are you sure to delete this theme?");
+            msg.Commands.Add(new UICommand("Yes", delegate(IUICommand command)
+            {
+                DeleteThemeAsync();
+            }));
+
+            msg.Commands.Add(new UICommand("No"));
+            msg.ShowAsync();
+        }
+
+        private async void DeleteThemeAsync()
+        {
+            await ThemeManager.Instance.DeleteThemeAsync(theme);
+
+            if (this.Frame.CanGoBack)
+            {
+                this.Frame.GoBack();
+            }
+        }
+
+        private void RevertSystemThemeButton_Click(object sender, RoutedEventArgs e)
+        {
+            RevertToSystemThemeAsync();
+        }
+
+        private async void RevertToSystemThemeAsync()
+        {
+            await ThemeManager.Instance.RevertThemeAsync(theme);
+            RevertTheme();
+            hideNotificationView();
         }
 
     }

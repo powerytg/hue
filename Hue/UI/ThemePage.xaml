@@ -10,7 +10,17 @@
     mc:Ignorable="d"
     Background="#1c2127">
 
-    <UserControl.Resources>
+    <Page.BottomAppBar>
+        <CommandBar ClosedDisplayMode="Compact">
+            <AppBarButton x:Name="DeleteButton" Icon="Delete" Label="delete theme"
+                          Click="DeleteButton_Click"/>
+            <AppBarButton x:Name="RevertSystemThemeButton" Icon="Undo" Label="revert"
+                          Click="RevertSystemThemeButton_Click"/>
+            
+        </CommandBar>
+    </Page.BottomAppBar>
+    
+    <Page.Resources>
         <Flyout x:Key="ThemeNameFlyout" Placement="Right">
             <parts:ThemeChangeNameView x:Name="ThemeNameEditor"/>
 
@@ -21,7 +31,7 @@
                 </Style>
             </Flyout.FlyoutPresenterStyle>
         </Flyout>
-    </UserControl.Resources>
+    </Page.Resources>
     
     <Grid x:Name="LayoutRoot">
 
@@ -35,8 +45,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" x:Name="ContentRoot"
-              Margin="15, 10, 10, 10">
+        <Grid Grid.Row="0" x:Name="ContentRoot">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -44,7 +53,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             
-            <Grid Margin="0, 0, 10, 25" Grid.Row="0">
+            <Grid Margin="15, 0, 10, 25" Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
@@ -70,21 +79,31 @@
                 </Button>
             </Grid>
 
-            <Grid Grid.Row="1" Margin="0, 0, 0, 20">
+            <Grid Grid.Row="1" Margin="15, 0, 10, 20">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <Button Content="Add Color" Padding="10, 2, 10, 2"
+                <TextBlock Text="Color Defintions"
+                           Grid.Column="0" Foreground="#9c9c9c" FontSize="18"
+                           VerticalAlignment="Center"/>
+                
+                <Button Content="+ Add Color" Padding="10, 2, 10, 2"
                         Foreground="#FFF0F0F0"
                        Background="#FF3352E0"
                        Style="{StaticResource RoundedButtonStyle}" MinHeight="34"
-                       Grid.Column="0" VerticalAlignment="Center"/>
+                       Grid.Column="1" VerticalAlignment="Center"/>
 
             </Grid>
 
             <ListView x:Name="ColorListView" 
                       Grid.Row="2">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+                
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <renderers:ColorRenderer HSBColorSource="{Binding}"/>

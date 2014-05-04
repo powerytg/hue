@@ -221,12 +221,58 @@ namespace Hue.API.Hue.Themes
             return newTheme;
         }
 
+        public async Task DeleteThemeAsync(HueTheme theme)
+        {
+            try
+            {
+                StorageFolder themeFolder = await ApplicationData.Current.LocalFolder.CreateFolderAsync("Themes", CreationCollisionOption.OpenIfExists);
+                StorageFile themeFile = await themeFolder.GetFileAsync(theme.FileName);
+                await themeFile.DeleteAsync();
+
+                if (Themes.Contains(theme))
+                {
+                    Themes.Remove(theme);
+
+                    // Notify theme list changes
+                    if (ThemeListChanged != null)
+                    {
+                        ThemeListChanged(this, null);
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            
+            
+        }
+
         public void InvalidateTheme(HueTheme theme)
         {
             if (ThemeChanged != null)
             {
                 ThemeChanged(theme, null);
             }
+        }
+
+        public async Task RevertThemeAsync(HueTheme theme)
+        {
+            if (!theme.IsSystemTheme)
+            {
+                return;
+            }
+
+            theme.ColorList.Clear();
+            foreach (var color in theme.DefaultColorList)
+            {
+                theme.ColorList.Add(color.Clone());
+            }
+
+            await UpdateThemeAsync(theme);
+
+            InvalidateTheme(theme);
         }
 
     }

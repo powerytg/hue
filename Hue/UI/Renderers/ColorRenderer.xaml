@@ -22,17 +22,30 @@
             </Flyout.FlyoutPresenterStyle>
         </Flyout>
     </UserControl.Resources>
-    
-    <Grid>       
-        <!--Title and preview-->
-        <StackPanel Orientation="Horizontal" Tapped="NameLabel_Tapped"
-                    FlyoutBase.AttachedFlyout="{StaticResource EditorFlyout}">
-            <Ellipse x:Name="ColorIndicator" Width="20" Height="20"
-                 Margin="15" VerticalAlignment="Center"/>
 
-            <TextBlock x:Name="NameLabel" Foreground="White"
-                   FontSize="24" FontWeight="Thin" VerticalAlignment="Center"/>
-        </StackPanel>
+    <Grid Margin="0, 0, 10, 0">       
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <Ellipse x:Name="ColorIndicator" Width="20" Height="20"
+                 Margin="15" VerticalAlignment="Center" Grid.Column="0"
+                 Tapped="NameLabel_Tapped"
+                 FlyoutBase.AttachedFlyout="{StaticResource EditorFlyout}"/>
+
+        <TextBlock x:Name="NameLabel" Foreground="White"
+                   FontSize="24" FontWeight="Thin" 
+                   VerticalAlignment="Center" Grid.Column="1"
+                   Tapped="NameLabel_Tapped"
+                   FlyoutBase.AttachedFlyout="{StaticResource EditorFlyout}"/>
+
+        <Button x:Name="DeleteButton"
+                    Content="delete" Grid.Column="2"
+                Style="{StaticResource RoundedButtonStyle}"
+                Background="#FFEC822A" 
+                MinWidth="80" MinHeight="28" Padding="2, 1, 2, 1"/>
     </Grid>
 
 </UserControl>

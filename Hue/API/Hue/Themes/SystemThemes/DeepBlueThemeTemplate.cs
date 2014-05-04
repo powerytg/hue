@@ -16,10 +16,15 @@ namespace Hue.API.Hue.Themes.SystemThemes
             IsSystemTheme = true;
             BannerImage = "/Assets/Themes/Blue.png";
 
-            ColorList.Add(HSBColor.FromColor(Color.FromArgb(0xff, 0x0d, 0x7e, 0xff)));
-            ColorList.Add(HSBColor.FromColor(Color.FromArgb(0xff, 0x0b, 0x74, 0xe9)));
-            ColorList.Add(HSBColor.FromColor(Color.FromArgb(0xff, 0x0a, 0x65, 0xcc)));
-            ColorList.Add(HSBColor.FromColor(Color.FromArgb(0xff, 0x09, 0x58, 0xb3)));
+            DefaultColorList.Add(HSBColor.FromColor(Color.FromArgb(0xff, 0x0d, 0x7e, 0xff)));
+            DefaultColorList.Add(HSBColor.FromColor(Color.FromArgb(0xff, 0x0b, 0x74, 0xe9)));
+            DefaultColorList.Add(HSBColor.FromColor(Color.FromArgb(0xff, 0x0a, 0x65, 0xcc)));
+            DefaultColorList.Add(HSBColor.FromColor(Color.FromArgb(0xff, 0x09, 0x58, 0xb3)));
+
+            foreach (var color in DefaultColorList)
+            {
+                ColorList.Add(color.Clone());
+            }
         }
 
     }

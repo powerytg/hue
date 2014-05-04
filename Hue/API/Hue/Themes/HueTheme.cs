@@ -17,11 +17,13 @@ namespace Hue.API.Hue.Themes
 
         public string FileName { get; set; }
 
+        public ObservableCollection<HSBColor> DefaultColorList { get; set; }
         public ObservableCollection<HSBColor> ColorList { get; set; }
 
         public HueTheme()
         {
             ColorList = new ObservableCollection<HSBColor>();
+            DefaultColorList = new ObservableCollection<HSBColor>();
         }
 
         public string ToJsonString()
@@ -32,7 +34,13 @@ namespace Hue.API.Hue.Themes
                 colors.Add(new { h = (int)color.H, s = (int)color.S, b = (int)color.B });
             }
 
-            var json = new { name = Name, is_system_default = IsSystemTheme, banner_image = BannerImage, colors = colors };
+            var defaultColors = new List<object>();
+            foreach (var color in DefaultColorList)
+            {
+                defaultColors.Add(new { h = (int)color.H, s = (int)color.S, b = (int)color.B });
+            }
+
+            var json = new { name = Name, is_system_default = IsSystemTheme, banner_image = BannerImage, colors = colors, default_colors = defaultColors };
             var jsonString = JsonConvert.SerializeObject(json);
             return jsonString;
         }

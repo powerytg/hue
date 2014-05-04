@@ -64,6 +64,22 @@ namespace Hue.API.Hue.Factories
                     }                    
                 }
 
+                // Default color list
+                JToken defaultColorToken;
+                if (json.TryGetValue("default_colors", out defaultColorToken))
+                {
+                    JArray colorArray = (JArray)json["default_colors"];
+                    foreach (JObject colorJson in colorArray)
+                    {
+                        int h = int.Parse(colorJson["h"].ToString());
+                        int s = int.Parse(colorJson["s"].ToString());
+                        int b = int.Parse(colorJson["b"].ToString());
+                        var color = new HSBColor(h, s, b);
+
+                        theme.DefaultColorList.Add(color);
+                    }
+                }
+
                 return theme;
             }
             catch (Exception ex)
