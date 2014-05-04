@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
+using Hue.API.Hue.Themes;
 
 // The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=391641
 
@@ -42,9 +43,17 @@ namespace Hue
             // Try to load settings
             PolicyKit.Instance.LoadFromSettings();
 
+            // Load themes
+            LoadThemesAsync();
+
             // Initialize API
             HueAPI.Instance.AppKey = "huewindowsphone";
             HueAPI.Instance.DeviceType = "windowsphone";
+        }
+
+        private async void LoadThemesAsync()
+        {
+            await ThemeManager.Instance.LoadThemesFromCacheAsync();
         }
 
         /// <summary>

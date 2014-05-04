@@ -71,6 +71,15 @@ namespace Hue.UI
                 theme.Name = "New Theme";
             }
 
+            if (theme.IsSystemTheme)
+            {
+                EditNameButton.Visibility = Visibility.Collapsed;
+            }
+            else 
+            {
+                EditNameButton.Visibility = Visibility.Visible;
+            }
+
             TitleLabel.Text = theme.Name;
 
             // Make a clone of colors
@@ -83,6 +92,7 @@ namespace Hue.UI
 
             // Events
             ColorRenderer.ColorChanged += OnThemeColorChanged;
+            ThemeManager.Instance.ThemeChanged += OnThemeChanged;
         }
 
         
@@ -95,7 +105,9 @@ namespace Hue.UI
 
         private void EditNameButton_Click(object sender, RoutedEventArgs e)
         {
-
+            ThemeNameEditor.ThemeSource = null;
+            ThemeNameEditor.ThemeSource = theme;
+            FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
         }
 
         private void OnThemeColorChanged(object sender, EventArgs e)
@@ -159,6 +171,10 @@ namespace Hue.UI
                 theme.ColorList.Add(color.Clone());
             }
 
+            // Save to file
+            await ThemeManager.Instance.SaveThemeToFileAsync(theme);
+
+            // Apply light colors
             await ThemeManager.Instance.ApplyThemeAsync(theme);
         }
             
@@ -172,6 +188,16 @@ namespace Hue.UI
             }
         }
 
+        private void OnThemeChanged(object sender, EventArgs e)
+        {
+            var target = sender as HueTheme;
+            if (target != theme)
+            {
+                return;
+            }
+
+            TitleLabel.Text = theme.Name;
+        }
 
     }
 }

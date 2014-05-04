@@ -81,9 +81,10 @@
   <ItemGroup>
     <Compile Include="API\Hue\BridgeManagerSchedulerExtension.cs" />
     <Compile Include="API\Hue\Factories\ScheduleFactory.cs" />
+    <Compile Include="API\Hue\Factories\ThemeFactory.cs" />
     <Compile Include="API\Hue\HueAPISchedulesExtension.cs" />
     <Compile Include="API\Hue\Schedule.cs" />
-    <Compile Include="API\Hue\Themes\SystemThemes\DeepBlueTheme.cs" />
+    <Compile Include="API\Hue\Themes\SystemThemes\DeepBlueThemeTemplate.cs" />
     <Compile Include="API\Media\HSBColor.cs" />
     <Compile Include="API\Hue\Bridge.cs" />
     <Compile Include="API\Hue\BridgeFinder.cs" />
@@ -176,11 +177,17 @@
     <Compile Include="UI\Renderers\UnsupportedScheduleRenderer.xaml.cs">
       <DependentUpon>UnsupportedScheduleRenderer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\Renderers\UserThemeRenderer.xaml.cs">
+      <DependentUpon>UserThemeRenderer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\ScheduleHubSection.xaml.cs">
       <DependentUpon>ScheduleHubSection.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\SupportClasses\NewThemeModel.cs" />
     <Compile Include="UI\ScheduleListTemplateSelector.cs" />
+    <Compile Include="UI\Parts\ThemeChangeNameView.xaml.cs">
+      <DependentUpon>ThemeChangeNameView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\ThemeListTemplateSelector.cs" />
     <Compile Include="UI\ThemeHubSection.xaml.cs">
       <DependentUpon>ThemeHubSection.xaml</DependentUpon>
@@ -196,9 +203,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\add.png" />
+    <Content Include="Assets\AddThemeIcon.png" />
     <Content Include="Assets\BridgeBase.png" />
     <Content Include="Assets\BridgeCenter.png" />
     <Content Include="Assets\EditIcon.png" />
+    <Content Include="Assets\FXAdd.png" />
     <Content Include="Assets\HSBRing.png" />
     <Content Include="Assets\HSBThumb.png" />
     <Content Include="Assets\LightOverviewThumb.png" />
@@ -337,7 +346,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UI\Renderers\UserThemeRenderer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\ScheduleHubSection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Parts\ThemeChangeNameView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

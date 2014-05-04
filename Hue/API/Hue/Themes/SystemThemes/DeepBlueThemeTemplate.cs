@@ -8,9 +8,9 @@ using Windows.UI;
 
 namespace Hue.API.Hue.Themes.SystemThemes
 {
-    public class DeepBlueTheme : HueTheme
+    public class DeepBlueThemeTemplate : HueTheme
     {
-        public DeepBlueTheme() : base()
+        public DeepBlueThemeTemplate() : base()
         {
             Name = "deep blue";
             IsSystemTheme = true;

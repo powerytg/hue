@@ -20,17 +20,30 @@
                    Foreground="#9c9c9c" TextWrapping="Wrap"
                    Text="A themes is able to apply pre-defined sets of colors to all your connected lights. You can also create your own themes."
                    FontSize="16"/>
-        
-        <GridView x:Name="ThemeListView" Grid.Row="1" SelectionChanged="ThemeListView_SelectionChanged">
-            <GridView.ItemTemplateSelector>
+
+        <ListView x:Name="ThemeListView" Grid.Row="1" SelectionChanged="ThemeListView_SelectionChanged">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
+
+            <ListView.ItemTemplateSelector>
                 <local:ThemeListTemplateSelector>
-                    <!--Hue theme-->
+                    <!--System theme-->
                     <local:ThemeListTemplateSelector.ThemeTemplate>
                         <DataTemplate>
                             <renderers:ThemeRenderer Theme="{Binding}"/>
                         </DataTemplate>
                     </local:ThemeListTemplateSelector.ThemeTemplate>
 
+                    <!--User theme-->
+                    <local:ThemeListTemplateSelector.UserThemeTemplate>
+                        <DataTemplate>
+                            <renderers:UserThemeRenderer ThemeSource="{Binding}"/>
+                        </DataTemplate>
+                    </local:ThemeListTemplateSelector.UserThemeTemplate>
+                    
                     <!--Create new theme-->
                     <local:ThemeListTemplateSelector.NewThemeTemplate>
                         <DataTemplate>
@@ -39,7 +52,7 @@
                     </local:ThemeListTemplateSelector.NewThemeTemplate>
 
                 </local:ThemeListTemplateSelector>
-            </GridView.ItemTemplateSelector>
-        </GridView>
+            </ListView.ItemTemplateSelector>
+        </ListView>
     </Grid>
 </UserControl>

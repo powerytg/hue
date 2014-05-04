@@ -33,7 +33,8 @@
                 </DataTemplate>
             </Hub.HeaderTemplate>
 
-            <HubSection x:Name="ThemeSection" Header="Themes" Style="{StaticResource MainHubSectionStyle}">
+            <HubSection x:Name="ThemeSection" Style="{StaticResource MainHubSectionStyle}"
+                        Header="Themes">
                 <DataTemplate>
                     <ui:ThemeHubSection/>
                 </DataTemplate>                

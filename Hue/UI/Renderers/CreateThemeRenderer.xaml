@@ -10,15 +10,18 @@
     d:DesignWidth="400"
     Margin="0, 0, 0, 25">
     
-    <Grid>
-        <Image Source="/Assets/Themes/CreateTheme.png"/>
-        <TextBlock
-                   Margin="10"
-                   HorizontalAlignment="Left" VerticalAlignment="Bottom"
-                   Foreground="White" FontSize="18" FontWeight="Thin">
-            Create<LineBreak/>
-            New Theme
-        </TextBlock>
+    <StackPanel Orientation="Horizontal">
+        
+        <TextBlock Text="custom themes"
+                   Margin="10, 0, 25, 0"
+                   VerticalAlignment="Center"
+                   Foreground="#00aeef" FontSize="28" FontWeight="Thin"/>
+        
+        <Grid Width="40" Height="40">
+            <Ellipse Fill="#0a3a64"/>
 
-    </Grid>
+            <Image Source="/Assets/AddThemeIcon.png" Width="20"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Grid>
+    </StackPanel>
 </UserControl>

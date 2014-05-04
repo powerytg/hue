@@ -13,6 +13,7 @@ namespace Hue.UI
     public class ThemeListTemplateSelector : DataTemplateSelector
     {
         public DataTemplate ThemeTemplate { get; set; }
+        public DataTemplate UserThemeTemplate { get; set; }
         public DataTemplate NewThemeTemplate { get; set; }
 
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
@@ -23,7 +24,16 @@ namespace Hue.UI
             }
             else if (item is HueTheme)
             {
-                return ThemeTemplate;
+                HueTheme theme = item as HueTheme;
+                if (theme.IsSystemTheme) 
+                { 
+                    return ThemeTemplate;
+                }
+                else 
+                {
+                    return UserThemeTemplate;
+                }
+
             }
 
             return base.SelectTemplateCore(item, container);
