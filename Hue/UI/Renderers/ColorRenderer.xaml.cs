@@ -25,6 +25,7 @@ namespace Hue.UI.Renderers
     {
         // Events
         public static EventHandler ColorChanged;
+        public static EventHandler ColorDeleted;
 
         public static readonly DependencyProperty HSBColorSourceProperty = DependencyProperty.Register(
         "HSBColorSource",
@@ -85,10 +86,23 @@ namespace Hue.UI.Renderers
 
         private void UpdateDisplayList()
         {
+            if (HSBColorSource == null)
+            {
+                return;
+            }
+
             Color rgbColor = HSBColor.FromHSB((int)HSBColorSource.H, (int)HSBColorSource.S, (int)HSBColorSource.B);
             ColorIndicator.Fill = new SolidColorBrush(rgbColor);
 
             NameLabel.Text = HSBColorSource.ToRGBString();
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (ColorDeleted != null)
+            {
+                ColorDeleted(HSBColorSource, null);
+            }
         }
 
        

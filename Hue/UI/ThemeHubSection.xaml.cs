@@ -106,6 +106,7 @@ namespace Hue.UI
         private async void CreateNewThemeAsync()
         {
             var newTheme = await ThemeManager.Instance.CreateThemeAsync();
+            await ThemeManager.Instance.ApplyThemeAsync(newTheme);
 
             var frame = Window.Current.Content as Frame;
             frame.Navigate(typeof(ThemePage), newTheme);

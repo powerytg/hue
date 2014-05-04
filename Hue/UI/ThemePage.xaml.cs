@@ -11,6 +11,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Graphics.Display;
+using Windows.UI;
 using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -97,6 +98,7 @@ namespace Hue.UI
 
             // Events
             ColorRenderer.ColorChanged += OnThemeColorChanged;
+            ColorRenderer.ColorDeleted += OnThemeColorDeleted;
             ThemeManager.Instance.ThemeChanged += OnThemeChanged;
         }
 
@@ -104,6 +106,7 @@ namespace Hue.UI
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             ColorRenderer.ColorChanged -= OnThemeColorChanged;
+            ColorRenderer.ColorDeleted -= OnThemeColorDeleted;
 
             this.navigationHelper.OnNavigatedFrom(e);
         }
@@ -146,6 +149,17 @@ namespace Hue.UI
             
         }
 
+        private void OnThemeColorDeleted(object sender, EventArgs e)
+        {
+            var color = (HSBColor) sender;
+            if (localColorList.Contains(color))
+            {
+                localColorList.Remove(color);
+
+                OnThemeColorChanged(this, null);
+            }
+        }
+
         private void ShowNotificationView() 
         {
             NotificationView.Visibility = Visibility.Visible;
@@ -177,7 +191,7 @@ namespace Hue.UI
             }
 
             // Save to file
-            await ThemeManager.Instance.SaveThemeToFileAsync(theme);
+            await ThemeManager.Instance.UpdateThemeAsync(theme);
 
             // Apply light colors
             await ThemeManager.Instance.ApplyThemeAsync(theme);
@@ -236,6 +250,16 @@ namespace Hue.UI
             await ThemeManager.Instance.RevertThemeAsync(theme);
             RevertTheme();
             hideNotificationView();
+
+            await ThemeManager.Instance.ApplyThemeAsync(theme);
+        }
+
+        private void AddColorButton_Click(object sender, RoutedEventArgs e)
+        {
+            var newColor = HSBColor.FromColor(Color.FromArgb(0xff, 0xec, 0xcd, 0x67));
+            localColorList.Add(newColor);
+
+            OnThemeColorChanged(this, null);
         }
 
     }

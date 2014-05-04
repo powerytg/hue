@@ -88,11 +88,12 @@
                            Grid.Column="0" Foreground="#9c9c9c" FontSize="18"
                            VerticalAlignment="Center"/>
                 
-                <Button Content="+ Add Color" Padding="10, 2, 10, 2"
+                <Button x:Name="AddColorButton" Content="+ Add Color" Padding="10, 2, 10, 2"
                         Foreground="#FFF0F0F0"
                        Background="#FF3352E0"
                        Style="{StaticResource RoundedButtonStyle}" MinHeight="34"
-                       Grid.Column="1" VerticalAlignment="Center"/>
+                       Grid.Column="1" VerticalAlignment="Center"
+                        Click="AddColorButton_Click"/>
 
             </Grid>
 

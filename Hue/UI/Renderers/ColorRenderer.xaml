@@ -45,7 +45,8 @@
                     Content="delete" Grid.Column="2"
                 Style="{StaticResource RoundedButtonStyle}"
                 Background="#FFEC822A" 
-                MinWidth="80" MinHeight="28" Padding="2, 1, 2, 1"/>
+                MinWidth="80" MinHeight="28" Padding="2, 1, 2, 1"
+                Click="DeleteButton_Click"/>
     </Grid>
 
 </UserControl>
