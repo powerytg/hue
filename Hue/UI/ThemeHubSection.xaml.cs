@@ -103,7 +103,7 @@ namespace Hue.UI
            
         }
 
-        private async void CreateNewThemeAsync()
+        public async void CreateNewThemeAsync()
         {
             var newTheme = await ThemeManager.Instance.CreateThemeAsync();
             await ThemeManager.Instance.ApplyThemeAsync(newTheme);

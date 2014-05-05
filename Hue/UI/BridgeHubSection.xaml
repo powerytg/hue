@@ -57,6 +57,6 @@
                    Foreground="#36a6e6" FontSize="14"/>
 
         <parts:BridgeControl x:Name="BridgeWidget" Width="300" Height="300"
-                             Margin="0, 30, 0, 0"/>
+                             Margin="0, 20, 0, 0"/>
     </StackPanel>
 </UserControl>

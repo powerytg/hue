@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:m3="http://schemas.microsoft.com/appx/2014/manifest" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
-  <Identity Name="36638906-d8d8-4266-9fa5-7035e001a2be" Publisher="CN=Tiangong You" Version="1.0.0.0" />
-  <mp:PhoneIdentity PhoneProductId="36638906-d8d8-4266-9fa5-7035e001a2be" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Identity Name="28348TiangongYou.HueLumixury" Publisher="CN=67135DEA-7C38-4760-9BE3-93DC1C0E91CF" Version="1.1.0.3" />
+  <mp:PhoneIdentity PhoneProductId="45fe6322-60ff-496e-95c4-4a40bb92f7e8" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>Hue</DisplayName>
+    <DisplayName>Hue Lumixury</DisplayName>
     <PublisherDisplayName>Tiangong You</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -16,12 +16,15 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Hue.App">
-      <m3:VisualElements DisplayName="Hue" Square150x150Logo="Assets\Logo.png" Square44x44Logo="Assets\SmallLogo.png" Description="Hue" ForegroundText="light" BackgroundColor="transparent">
-        <m3:DefaultTile Wide310x150Logo="Assets\WideLogo.png" Square71x71Logo="Assets\Square71x71Logo.png">
+      <m3:VisualElements DisplayName="Hue Lumixury" Square150x150Logo="Assets\Logo.png" Square44x44Logo="Assets\SmallLogo.png" Description="Hue Lumixury is an elegant and easy to use app for your Philips Hue smart lighting. Create your own color themes for Hue blubs or control them individually. Better yet, set up schedules for automatic on/off of all your connected lights!" ForegroundText="light" BackgroundColor="transparent">
+        <m3:DefaultTile Wide310x150Logo="Assets\WideLogo.png" Square71x71Logo="Assets\Square71x71Logo.png" ShortName="Hue Lumixury">
         </m3:DefaultTile>
         <m3:SplashScreen Image="Assets\SplashScreen.png" />
         <m3:ApplicationView MinWidth="width320" />
         <!--Used in XAML Designer. DO NOT REMOVE-->
+        <m3:InitialRotationPreference>
+          <m3:Rotation Preference="portrait" />
+        </m3:InitialRotationPreference>
       </m3:VisualElements>
     </Application>
   </Applications>

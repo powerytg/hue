@@ -45,18 +45,13 @@ namespace Hue.API.Hue.Themes
         {
             Themes = new List<HueTheme>();
             
-            //Themes.Add(new DeepBlueThemeTemplate());
-            
-            /*
-            Themes.Add(new HueTheme { Name = "Dreaming", IsSystemTheme = true, BannerImage = "/Assets/Themes/Dream.png" });
-            Themes.Add(new HueTheme { Name = "Enchanted", IsSystemTheme = true, BannerImage = "/Assets/Themes/Enchanted.png" });
-            Themes.Add(new HueTheme { Name = "Pure Essense", IsSystemTheme = true, BannerImage = "/Assets/Themes/Pure.png" });
-            Themes.Add(new HueTheme { Name = "Serenity", IsSystemTheme = true, BannerImage = "/Assets/Themes/Serenity.png" });
-            Themes.Add(new HueTheme { Name = "Starry Night", IsSystemTheme = true, BannerImage = "/Assets/Themes/Starry.png" });
-             */
-
             DefaultThemeTemplates = new List<HueTheme>();
             DefaultThemeTemplates.Add(new DeepBlueThemeTemplate());
+            DefaultThemeTemplates.Add(new DreamingThemeTemplate());
+            DefaultThemeTemplates.Add(new EhchantedThemeTemplate());
+            DefaultThemeTemplates.Add(new PureThemeTemplate());
+            DefaultThemeTemplates.Add(new SerenityThemeTemplate());
+            DefaultThemeTemplates.Add(new StarryThemeTemplate());
         }
 
         public async Task LoadThemesFromCacheAsync()
@@ -186,7 +181,8 @@ namespace Hue.API.Hue.Themes
                 light.Brightness = (int)color.B;
                 BridgeManager.Instance.InvalidateLightProperties(light);
 
-                if (colorIndex == theme.ColorList.Count - 1)
+                colorIndex++;
+                if (colorIndex >= theme.ColorList.Count - 1)
                 {
                     colorIndex = 0;
                 }

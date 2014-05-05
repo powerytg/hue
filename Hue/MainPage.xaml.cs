@@ -1,5 +1,7 @@
 ﻿using Hue.API.Hue;
+using Hue.API.Hue.Themes;
 using Hue.Common;
+using Hue.UI;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -85,6 +87,41 @@ namespace Hue
             await statusBar.ProgressIndicator.ShowAsync();
 
             HueAPI.Instance.GetAllConfigurationsAsync();
+        }
+
+        private void AddThemeButton_Click(object sender, RoutedEventArgs e)
+        {
+            CreateNewThemeAsync();
+        }
+
+        private void RefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            RefreshConfigurationsAsync();
+        }
+
+        private async void CreateNewThemeAsync()
+        {
+            var newTheme = await ThemeManager.Instance.CreateThemeAsync();
+            await ThemeManager.Instance.ApplyThemeAsync(newTheme);
+
+            var frame = Window.Current.Content as Frame;
+            frame.Navigate(typeof(ThemePage), newTheme);
+        }
+
+        private void AboutButton_Click(object sender, RoutedEventArgs e)
+        {
+            ShowAboutViewAsync();
+        }
+
+        private async void ShowAboutViewAsync()
+        {
+            var text = "Hue Lumixury 1.0\n";
+            text += "Elegant, easy and free\n\n";
+            text += "From the creator of Indulged :)\n\n";
+            text += "2014 Tiangong You, all rights reserved\n";
+            
+            var msg = new MessageDialog(text);
+            await msg.ShowAsync();
         }
 
     }

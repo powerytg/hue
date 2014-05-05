@@ -47,7 +47,7 @@ namespace Hue
             LoadThemesAsync();
 
             // Initialize API
-            HueAPI.Instance.AppKey = "huewindowsphone";
+            HueAPI.Instance.AppKey = "huelumixury";
             HueAPI.Instance.DeviceType = "windowsphone";
         }
 

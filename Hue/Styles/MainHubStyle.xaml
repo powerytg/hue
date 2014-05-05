@@ -25,7 +25,8 @@
                         <Rectangle x:Name="HubHeaderPlaceholder" Grid.Row="0"/>
                         <ContentControl x:Name="Header" CharacterSpacing="{StaticResource HubSectionHeaderCharacterSpacing}" ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" 
                                         FontSize="{StaticResource HubSectionHeaderFontSize}" FontFamily="{StaticResource PhoneFontFamilyLight}" FontStretch="Condensed" FontWeight="ExtraLight"
-                                        HorizontalAlignment="Left" Margin="{StaticResource HubSectionHeaderMarginThickness}" Grid.Row="1">
+                                        HorizontalAlignment="Left" Margin="{StaticResource HubSectionHeaderMarginThickness}" Grid.Row="1"
+                                        Foreground="White">
                             <ContentControl.RenderTransform>
                                 <CompositeTransform x:Name="StickyHeaderTransform"/>
                             </ContentControl.RenderTransform>

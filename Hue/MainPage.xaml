@@ -11,8 +11,9 @@
 
     <Page.BottomAppBar>
         <CommandBar ClosedDisplayMode="Minimal">
-            <AppBarButton Icon="Add" Label="add theme"/>
-            <AppBarButton Icon="Refresh" Label="refresh"/>
+            <AppBarButton x:Name="AddThemeButton" Icon="Add" Label="add theme" Click="AddThemeButton_Click"/>
+            <AppBarButton x:Name="RefreshButton" Icon="Refresh" Label="refresh" Click="RefreshButton_Click"/>
+            <AppBarButton x:Name="AboutButton" Icon="Help"  Label="about" Click="AboutButton_Click"/>
         </CommandBar>
     </Page.BottomAppBar>
     
